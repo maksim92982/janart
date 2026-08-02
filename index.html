@@ -343,7 +343,7 @@
             position: absolute;
             top: calc(100% + 8px);
             right: 0;
-            min-width: 150px;
+            min-width: 170px;
             background: #fff;
             border: 1px solid #e5e5e5;
             box-shadow: 0 8px 24px rgba(0,0,0,0.08);
@@ -4935,7 +4935,7 @@ function logGalleryState() {
             localStorage.removeItem('janart_gallery_data');
             const success = await loadGalleryDataFromLocal();
             if (success) {
-                initGallery(currentGalleryData, 'gallery-grid');
+                initGallery(getCurrentGalleryData(), 'gallery-grid');
                 console.log('✅ Данные перезагружены успешно!');
             } else {
                 console.log('❌ Не удалось перезагрузить данные');
@@ -4944,9 +4944,9 @@ function logGalleryState() {
         
         // Глобальная функция для проверки доступности файла
         window.checkFileAccess = async function() {
-            console.log('🔍 Проверяем доступность файла gallery-data.php...');
+            console.log('🔍 Проверяем доступность gallery-data.json / gallery-data.php...');
             try {
-                const response = await fetch('gallery-data.php');
+                const response = await fetch('gallery-data.json');
                 console.log('📁 Статус ответа:', response.status, response.statusText);
                 console.log('📁 Заголовки:', response.headers);
                 if (response.ok) {
@@ -5486,7 +5486,7 @@ function generatePhotosConfig() {
             painting.content.splice(contentIndex, 1);
             syncPaintingMediaCollections(painting);
             saveGalleryDataComplete().then(() => {
-                initGallery(currentGalleryData, 'gallery-grid');
+                initGallery(getCurrentGalleryData(), 'gallery-grid');
                 generatePhotosConfig();
                 generatePaintingsOrderConfig();
                 openPhotosManagement(paintingNumber);
@@ -5529,7 +5529,7 @@ function generatePhotosConfig() {
             syncPaintingMediaCollections(painting);
             
             saveGalleryDataComplete().then(() => {
-                initGallery(currentGalleryData, 'gallery-grid');
+                initGallery(getCurrentGalleryData(), 'gallery-grid');
                 generatePhotosConfig();
                 generatePaintingsOrderConfig();
                 openPhotosManagement(paintingNumber);
@@ -5630,7 +5630,7 @@ function generatePhotosConfig() {
                 
                 // Сохраняем данные на сервер
                 saveGalleryDataComplete().then(() => {
-                    initGallery(currentGalleryData, 'gallery-grid');
+                    initGallery(getCurrentGalleryData(), 'gallery-grid');
                     generatePhotosConfig();
                     generatePaintingsOrderConfig();
                     openPhotosManagement(paintingNumber);
@@ -5665,7 +5665,7 @@ function generatePhotosConfig() {
             }
             syncPaintingMediaCollections(painting);
             await saveGalleryDataComplete();
-            initGallery(currentGalleryData, 'gallery-grid');
+            initGallery(getCurrentGalleryData(), 'gallery-grid');
             generatePhotosConfig();
             generatePaintingsOrderConfig();
             openPhotosManagement(paintingNumber);
@@ -5967,7 +5967,7 @@ function generatePhotosConfig() {
                 
                 // Сохраняем данные на сервер
                 saveGalleryDataComplete().then(() => {
-                    initGallery(currentGalleryData, 'gallery-grid');
+                    initGallery(getCurrentGalleryData(), 'gallery-grid');
                     generatePhotosConfig();
                     generatePaintingsOrderConfig();
                     openPhotosManagement(paintingNumber);
@@ -6023,7 +6023,7 @@ function generatePhotosConfig() {
                 
             // Сохраняем, обновляем галерею и конфигурации
             // (но оставляем раскрытым раздел "Управление фотографиями")
-                initGallery(currentGalleryData, 'gallery-grid');
+                initGallery(getCurrentGalleryData(), 'gallery-grid');
                 generatePhotosConfig();
                 generatePaintingsOrderConfig();
             
@@ -6087,7 +6087,7 @@ function generatePhotosConfig() {
             saveGalleryData();
             
             // Обновляем ТОЛЬКО текущую галерею
-            initGallery(currentGalleryData, 'gallery-grid');
+            initGallery(getCurrentGalleryData(), 'gallery-grid');
             
             // Перезагружаем список фотографий (не закрывая раздел управления)
             openPhotosManagement(paintingNumber);
@@ -6127,7 +6127,7 @@ function generatePhotosConfig() {
             if (confirm(`Удалить картину "${painting.title}"?`)) {
                 galleryData.paintings.splice(paintingIndex, 1);
                 await saveGalleryDataComplete();
-                initGallery(currentGalleryData, 'gallery-grid');
+                initGallery(getCurrentGalleryData(), 'gallery-grid');
                 generatePhotosConfig();
                 generatePaintingsOrderConfig();
                 alert('Картина удалена!');
@@ -6580,7 +6580,7 @@ async function deletePainting(paintingIndex) {
         loadPaintingsList();
         
         // Обновляем галерею на фронтенде
-        initGallery(currentGalleryData, 'gallery-grid');
+        initGallery(getCurrentGalleryData(), 'gallery-grid');
         
         // Обновляем конфигурации в админ-панели
         generatePhotosConfig();
@@ -6668,125 +6668,94 @@ async function deletePainting(paintingIndex) {
         }
 
         // Загрузить данные галереи из файла
-        // Загрузить данные галереи из файла (обновленная)
-async function loadGalleryDataFromLocal() {
-    console.log('📁 ===== ЗАГ???УЗКА ДАННЫХ ИЗ ФАЙЛА =====');
-    
-    try {
-        const filePath = 'gallery-data.php';
-        const timestamp = new Date().getTime();
-        const url = `${filePath}?t=${timestamp}`;
-        
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000);
-        
-        console.log('📁 Загружаем данные из:', url);
-        const response = await fetch(url, {
-            signal: controller.signal,
-            cache: 'no-cache'
-        });
-        clearTimeout(timeoutId);
-        
-        if (response.ok) {
-            const data = await response.json();
-            console.log('📁 Данные загружены из файла:', data);
-                const serverVisibility = typeof data.masterClassVisible === 'boolean' ? data.masterClassVisible : undefined;
+        async function loadGalleryDataFromLocal() {
+    console.log('📁 ===== ЗАГРУЗКА ДАННЫХ ИЗ ФАЙЛА =====');
 
-            // Обработка нового формата с двумя галереями
-            if (data.gallery && data.gallery2) {
-                console.log('✅ Загружены данные двух галерей');
-                galleryData.paintings = data.gallery.paintings || [];
-                gallery2Data.paintings = data.gallery2.paintings || [];
-                
-                // ДЕТАЛЬНОЕ ЛОГИ???ОВАНИЕ
-                console.log('📊 ===== СТАТИСТИКА ЗАГ???УЖЕННЫХ ДАННЫХ =====');
-                console.log('📊 Галерея (galleryData):', galleryData.paintings.length, 'картин');
-                if (galleryData.paintings.length > 0) {
-                    console.log('📊 Пример картин галереи 1 (первые 5):');
-                    galleryData.paintings.slice(0, 5).forEach((p, i) => {
-                        console.log(`   ${i + 1}. ID: ${p.id}, Название: "${p.title}", Фото: ${p.images ? p.images.length : 0}`);
-                    });
-                } else {
-                    console.log('⚠️ Галерея ПУСТАЯ!');
-                }
-                
-                console.log('---');
-                console.log('📊 Мастер-класс (gallery2Data):', gallery2Data.paintings.length, 'картин');
-                if (gallery2Data.paintings.length > 0) {
-                    console.log('📊 Пример картин галереи 2 (первые 5):');
-                    gallery2Data.paintings.slice(0, 5).forEach((p, i) => {
-                        console.log(`   ${i + 1}. ID: ${p.id}, Название: "${p.title}", Фото: ${p.images ? p.images.length : 0}`);
-                    });
-                } else {
-                    console.log('⚠️ Мастер-класс ПУСТАЯ!');
-                }
-                
-                // Проверка на пустые массивы
-                if (galleryData.paintings.length === 0 && gallery2Data.paintings.length > 0) {
-                    console.warn('🚨 ВНИМАНИЕ: Галерея пустая, а Мастер-класс содержит данные!');
-                } else if (gallery2Data.paintings.length === 0 && galleryData.paintings.length > 0) {
-                    console.warn('🚨 ВНИМАНИЕ: Мастер-класс пустая, а Галерея содержит данные!');
-                } else if (galleryData.paintings.length > 0 && gallery2Data.paintings.length > 0) {
-                    console.log('✅ Обе галереи содержат данные');
-                }
-                
-                console.log('рџ"Љ ===========================================');
-                
-            } else if (data.paintings) {
-                console.log('✅ Мигрированы данные из старого формата');
-                galleryData.paintings = data.paintings;
-                gallery2Data.paintings = []; // Вторая галерея пустая
-                
-                console.log('📊 Старый формат: все картины загружены в Галерею 1');
-                console.log(`📊 Картин в Галерее: ${galleryData.paintings.length}`);
-                console.log(`📊 Картин в Мастер-классе: ${gallery2Data.paintings.length} (пустая)`);
-                
-                if (galleryData.paintings.length > 0) {
-                    console.log('📊 Пример картин из старого формата:');
-                    galleryData.paintings.slice(0, 3).forEach((p, i) => {
-                        console.log(`   ${i + 1}. ID: ${p.id}, Название: "${p.title}"`);
-                    });
-                }
-            } else {
-                console.error('❌ Неизвестный формат данных:', data);
-            }
-            
-            // Нормализуем количества картин и сохраняем в localStorage для отладки
-            normalizeGalleryQuantities();
-            loadMasterclassVisibilitySetting(serverVisibility);
-            saveGalleryData();
-            
-            // Проверяем, что данные сохранились правильно
-            const savedData = JSON.parse(localStorage.getItem('janart_gallery_data') || '{}');
-            console.log('💾 Проверка сохраненных данных в localStorage:');
-            console.log('💾 Галерея сохранена:', savedData.gallery ? savedData.gallery.paintings.length : 0);
-            console.log('💾 Мастер-класс сохранена:', savedData.gallery2 ? savedData.gallery2.paintings.length : 0);
-            
-            return true;
+    const candidates = ['gallery-data.json', 'gallery-data.php'];
+
+    const applyLoadedData = (data) => {
+        const serverVisibility = typeof data.masterClassVisible === 'boolean' ? data.masterClassVisible : undefined;
+
+        if (data.gallery && data.gallery2) {
+            console.log('✅ Загружены данные двух галерей');
+            galleryData.paintings = data.gallery.paintings || [];
+            gallery2Data.paintings = data.gallery2.paintings || [];
+        } else if (data.paintings) {
+            console.log('✅ Мигрированы данные из старого формата');
+            galleryData.paintings = data.paintings;
+            gallery2Data.paintings = [];
         } else {
-            console.error('❌ Ошибка HTTP при загрузке файла:', response.status, response.statusText);
+            console.error('❌ Неизвестный формат данных:', data);
+            return false;
         }
-    } catch (error) {
-        console.error('❌ Ошибка загрузки данных:', error);
-        console.error('❌ Тип ошибки:', error.name);
-        console.error('❌ Сообщение:', error.message);
-        
-        // Проверяем, есть ли данные в localStorage как fallback
+
+        console.log('📊 Галерея:', (galleryData.paintings || []).length, 'картин');
+        console.log('📊 Мастер-класс:', (gallery2Data.paintings || []).length, 'картин');
+
+        normalizeGalleryQuantities();
+        loadMasterclassVisibilitySetting(serverVisibility);
+        saveGalleryData();
+        return true;
+    };
+
+    for (const filePath of candidates) {
+        try {
+            const url = `${filePath}?t=${Date.now()}`;
+            console.log('📁 Пробуем загрузить:', url);
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000);
+            const response = await fetch(url, {
+                signal: controller.signal,
+                cache: 'no-cache',
+                headers: { 'Accept': 'application/json' }
+            });
+            clearTimeout(timeoutId);
+
+            if (!response.ok) {
+                console.warn('⚠️ HTTP', response.status, 'для', filePath);
+                continue;
+            }
+
+            const raw = await response.text();
+            const trimmed = raw.trimStart();
+            if (!trimmed || trimmed.startsWith('<?php') || trimmed.startsWith('<!')) {
+                console.warn('⚠️ Ответ не JSON для', filePath, '(похоже на PHP/HTML без выполнения)');
+                continue;
+            }
+
+            let data;
+            try {
+                data = JSON.parse(raw);
+            } catch (parseError) {
+                console.warn('⚠️ JSON parse fail для', filePath, parseError.message);
+                continue;
+            }
+
+            console.log('📁 Данные загружены из', filePath);
+            if (applyLoadedData(data)) {
+                return true;
+            }
+        } catch (error) {
+            console.warn('⚠️ Ошибка загрузки', filePath, error.message || error);
+        }
+    }
+
+    // Fallback: localStorage
+    try {
         const savedData = loadGalleryData();
         if (savedData) {
             console.log('🔄 Используем данные из localStorage как fallback');
             if (savedData.gallery) galleryData = savedData.gallery;
+            if (savedData.gallery2) gallery2Data = savedData.gallery2;
             const fallbackVisibility = typeof savedData.masterClassVisible === 'boolean' ? savedData.masterClassVisible : undefined;
             loadMasterclassVisibilitySetting(fallbackVisibility);
-            if (savedData.gallery2) gallery2Data = savedData.gallery2;
-            
-            console.log('🔄 Галерея из localStorage:', galleryData.paintings ? galleryData.paintings.length : 0);
-            console.log('🔄 Мастер-класс из localStorage:', gallery2Data.paintings ? gallery2Data.paintings.length : 0);
-            return true;
+            return !!(galleryData.paintings && galleryData.paintings.length);
         }
+    } catch (e) {
+        console.error('❌ Fallback localStorage failed:', e);
     }
-    
-    console.log('⚠️ Не удалось загрузить данные ни из файла, ни из localStorage');
+
     return false;
 }
 
@@ -7165,7 +7134,7 @@ function initAdminPanel() {
             
             // Сохраняем изменения и обновляем UI
             await saveGalleryDataComplete();
-            initGallery(currentGalleryData, 'gallery-grid');
+            initGallery(getCurrentGalleryData(), 'gallery-grid');
             generatePhotosConfig();
             generatePaintingsOrderConfig();
         }
@@ -7198,7 +7167,7 @@ function initAdminPanel() {
             await saveGalleryDataComplete();
             
             // Обновляем галерею
-            initGallery(currentGalleryData, 'gallery-grid');
+            initGallery(getCurrentGalleryData(), 'gallery-grid');
             
             // Перезагружаем конфигурацию порядка
             generatePaintingsOrderConfig();
@@ -7292,35 +7261,26 @@ function initAdminPanel() {
                     return;
                 }
                 
-                // Если не удалось загрузить из файла, загружаем из localStorage
+                // Если не удалось загрузить из файла, загружаем из localStorage / defaults
                 const savedData = loadGalleryData();
                 if (savedData) {
                     const fallbackVisibility = typeof savedData.masterClassVisible === 'boolean' ? savedData.masterClassVisible : undefined;
                     loadMasterclassVisibilitySetting(fallbackVisibility);
+                    if (savedData.gallery) galleryData = savedData.gallery;
+                    if (savedData.gallery2) gallery2Data = savedData.gallery2;
+                    if (Array.isArray(savedData) && savedData.length > 0) {
+                        galleryData.paintings = savedData;
+                    }
                 }
-                if (savedData && savedData.length > 0) {
-                    galleryData.paintings = savedData;
-                    initGallery(currentGalleryData, 'gallery-grid');
-                    initNavigation();
-                    initForms();
-                    initContactsModal();
-                    initURLRouting();
-                    initAdminPanel();
-                    initDescriptionModal();
+
+                const hasPaintings = (galleryData.paintings && galleryData.paintings.length > 0)
+                    || (gallery2Data.paintings && gallery2Data.paintings.length > 0);
+
+                if (!hasPaintings) {
+                    await initializeGalleryItems();
                 }
-                
-                // Затем пытаемся обновить данные из локального файла в фоне
-                const localSuccess = await loadGalleryDataFromLocal();
-                if (localSuccess) {
-                    // Если данные обновились, перерисовываем галерею
-                    initGallery(currentGalleryData, 'gallery-grid');
-                } else {
-                    // Если локальный файл недоступен, инициализируем с данными по умолчанию
-            await initializeGalleryItems();
-                    initGallery(currentGalleryData, 'gallery-grid');
-                }
-                
-                // Инициализируем навигацию и остальные компоненты
+
+                initGallery(getCurrentGalleryData(), 'gallery-grid');
                 console.log('Инициализируем навигацию...');
                 initNavigation();
                 initForms();
@@ -7328,17 +7288,18 @@ function initAdminPanel() {
                 initURLRouting();
                 initAdminPanel();
                 initDescriptionModal();
+                applyLanguage(currentLang, { refreshGallery: true });
             } catch (error) {
                 console.error('Ошибка инициализации:', error);
-                // Fallback - инициализируем с данными по умолчанию
                 await initializeGalleryItems();
-            initGallery();
-            initNavigation();
-            initForms();
-            initContactsModal();
-            initURLRouting();
-            initAdminPanel();
-            initDescriptionModal();
+                initGallery(getCurrentGalleryData(), 'gallery-grid');
+                initNavigation();
+                initForms();
+                initContactsModal();
+                initURLRouting();
+                initAdminPanel();
+                initDescriptionModal();
+                applyLanguage(currentLang, { refreshGallery: true });
             } finally {
                 // Убираем индикатор загрузки
                 if (loadingIndicator && loadingIndicator.parentNode) {
@@ -7899,7 +7860,7 @@ function renderGalleryItems(items, galleryContainer, accessibleLots = new Set())
                                 // Если контейнер не найден, используем стандартный метод
                                 console.warn('⚠️ Контейнер не найден, используем стандартную инициализацию');
                                 const currentGalleryData = getCurrentGalleryData();
-                                initGallery(currentGalleryData, containerId);
+                                initGallery(getCurrentGalleryData(), containerId);
                             }
                         } else {
                             alert('Ошибка покупки: ' + (result.error || 'Неизвестная ошибка'));
@@ -8972,7 +8933,7 @@ function renderGalleryItems(items, galleryContainer, accessibleLots = new Set())
 
         // Обновление отображения галереи
         function updateGalleryDisplay() {
-            initGallery(currentGalleryData, 'gallery-grid');
+            initGallery(getCurrentGalleryData(), 'gallery-grid');
         }
 
         // Инициализация URL-маршрутизации
@@ -10347,7 +10308,7 @@ function initPersonalCabinetModal() {
                 // Обновляем галерею для отображения доступных лотов
                 const currentGalleryData = getCurrentGalleryData();
                 const containerId = currentGalleryType === 'gallery2' ? 'gallery2-grid' : 'gallery-grid';
-                initGallery(currentGalleryData, containerId);
+                initGallery(getCurrentGalleryData(), containerId);
             }, 600);
         } else {
             setMessage(result.message, 'error');
@@ -10441,7 +10402,7 @@ function initPersonalCabinetModal() {
                         // Обновляем галерею, чтобы скрыть доступные лоты
                         const currentGalleryData = getCurrentGalleryData();
                         const containerId = currentGalleryType === 'gallery2' ? 'gallery2-grid' : 'gallery-grid';
-                        initGallery(currentGalleryData, containerId);
+                        initGallery(getCurrentGalleryData(), containerId);
                     }, 1000);
                 } else {
                     setMessage('Ошибка при выходе из системы', 'error');
@@ -10463,7 +10424,7 @@ function initPersonalCabinetModal() {
                     // Обновляем галерею
                     const currentGalleryData = getCurrentGalleryData();
                     const containerId = currentGalleryType === 'gallery2' ? 'gallery2-grid' : 'gallery-grid';
-                    initGallery(currentGalleryData, containerId);
+                    initGallery(getCurrentGalleryData(), containerId);
                 }, 1000);
             }
         });
@@ -10582,7 +10543,7 @@ function showPurchaseLotModal(lotId, lotTitle, lotPrice) {
                     // Обновляем галерею
                     const currentGalleryData = getCurrentGalleryData();
                     const containerId = currentGalleryType === 'gallery2' ? 'gallery2-grid' : 'gallery-grid';
-                    initGallery(currentGalleryData, containerId);
+                    initGallery(getCurrentGalleryData(), containerId);
                     
                     // Показываем личный кабинет
                     setTimeout(() => {
