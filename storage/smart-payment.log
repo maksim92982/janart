@@ -1,0 +1,32 @@
+[2026-05-18 13:18:38] Incoming smart payment request {"method":"POST"}
+[2026-05-18 13:18:38] Config error {"message":"Перед использованием смарт-оплаты установите реальные значения SELFWORK_MERCHANT_ID и SELFWORK_SECRET_KEY в lib\/payment-config.php или в переменных окружения."}
+[2026-05-18 14:02:52] Incoming smart payment request {"method":"POST"}
+[2026-05-18 14:02:52] Config error {"message":"Перед использованием смарт-оплаты установите реальные значения SELFWORK_MERCHANT_ID и SELFWORK_SECRET_KEY в lib\/payment-config.php или в переменных окружения."}
+[2026-05-18 14:10:30] Incoming smart payment request {"method":"POST"}
+[2026-05-18 14:10:32] Smart payment initialized {"order_id":"JS8e39c5e26a","total":945000,"items":1}
+[2026-05-18 14:11:32] Incoming smart payment request {"method":"POST"}
+[2026-05-18 14:11:33] Smart payment initialized {"order_id":"JS123e062f80","total":945000,"items":1}
+[2026-05-18 14:15:11] Incoming smart payment request {"method":"POST"}
+[2026-05-18 14:15:12] Smart payment initialized {"order_id":"JS90036ba542","total":1000,"items":1}
+[2026-05-18 14:23:55] Incoming smart payment request {"method":"POST"}
+[2026-05-18 14:23:56] Incoming smart payment request {"method":"POST"}
+[2026-05-18 14:23:56] Smart payment initialized {"order_id":"JSb247c5e401","total":1745000,"items":1}
+[2026-05-18 14:23:57] Smart payment initialized {"order_id":"JS02675539a3","total":1745000,"items":1}
+[2026-05-18 14:26:07] Incoming smart payment request {"method":"POST"}
+[2026-05-18 14:26:08] Smart payment initialized {"order_id":"JS9e506d7ae4","total":1345000,"items":1}
+[2026-05-18 15:00:35] Incoming smart payment request {"method":"POST"}
+[2026-05-18 15:00:37] Smart payment initialized {"order_id":"JSaa0554dad1","total":945000,"items":1}
+[2026-05-18 17:05:28] Incoming smart payment request {"method":"POST"}
+[2026-05-18 17:05:30] Smart payment initialized {"order_id":"JS20260518170519","total":1000,"items":1}
+[2026-05-18 17:05:31] Incoming smart payment request {"method":"POST"}
+[2026-05-18 17:05:32] Smart payment initialized {"order_id":"JS20260518170519","total":1000,"items":1}
+[2026-05-18 17:05:39] Incoming smart payment request {"method":"POST"}
+[2026-05-18 17:05:40] Smart payment initialized {"order_id":"JS20260518170519","total":1000,"items":1}
+[2026-05-18 17:06:24] Incoming smart payment request {"method":"POST"}
+[2026-05-18 17:06:25] Smart payment initialized {"order_id":"JS20260518170615","total":1000,"items":1}
+[2026-05-18 17:10:42] Incoming smart payment request {"method":"POST"}
+[2026-05-18 17:10:44] Smart payment initialized {"order_id":"JS20260518171038","total":1000,"items":1}
+[2026-05-18 17:16:33] Incoming smart payment request {"method":"POST"}
+[2026-05-18 17:16:34] Smart payment initialized {"order_id":"JS20260518171631","total":1000,"items":1}
+[2026-06-03 08:10:08] Incoming smart payment request {"method":"POST"}
+[2026-06-03 08:10:11] Smart payment initialized {"order_id":"JS20260603081006","total":1745000,"items":1}

@@ -1,0 +1,18 @@
+[2026-01-14 11:15:59] [91.199.137.165] REGISTER ok {"email":"ma89spb@gmail.com"}
+[2026-01-14 11:16:52] [91.199.137.165] LOGIN ok {"email":"ma89spb@gmail.com"}
+[2026-01-14 11:32:59] [91.199.137.165] LOGIN ok {"email":"ma89spb@gmail.com"}
+[2026-01-14 11:36:07] [91.199.137.165] RECOVER ok {"email":"ma89spb@gmail.com"}
+[2026-01-14 11:37:21] [91.199.137.165] LOGIN ok {"email":"ma89spb@gmail.com"}
+[2026-01-14 11:41:29] [91.199.137.165] CHANGE_PASSWORD ok {"email":"ma89spb@gmail.com"}
+[2026-01-14 11:41:35] [91.199.137.165] LOGIN ok {"email":"ma89spb@gmail.com"}
+[2026-01-18 11:45:48] [91.199.137.165] LOGIN ok {"email":"ma89spb@gmail.com"}
+[2026-01-23 08:34:34] [89.23.119.202] LOGIN ok {"email":"ma89spb@gmail.com"}
+[2026-01-23 08:34:41] [89.23.119.202] LOT_PURCHASED {"user":"ma89spb@gmail.com","lot_id":"PAINTING_4"}
+[2026-01-23 08:38:48] [89.23.119.202] LOT_PURCHASED {"user":"ma89spb@gmail.com","lot_id":"PAINTING_6"}
+[2026-01-23 08:41:55] [89.23.119.202] LOT_PURCHASED {"user":"ma89spb@gmail.com","lot_id":"PAINTING_7"}
+[2026-01-23 08:51:43] [89.23.119.202] LOGIN ok {"email":"ma89spb@gmail.com"}
+[2026-01-23 09:09:57] [89.23.119.202] LOGOUT {"email":"ma89spb@gmail.com"}
+[2026-01-23 10:51:48] [89.23.119.202] PURCHASE_LOT_WITH_EMAIL new_user_created {"email":"ta88spb@gmail.com"}
+[2026-01-23 10:51:48] [89.23.119.202] PURCHASE_LOT_WITH_EMAIL ok {"email":"ta88spb@gmail.com","lot_id":"PAINTING_4","is_new_user":true}
+[2026-05-18 14:59:46] [130.193.59.107] LOGIN ok {"email":"ma89spb@gmail.com"}
+[2026-05-18 17:05:51] [130.193.59.107] LOGOUT {"email":"ma89spb@gmail.com"}
