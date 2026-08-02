@@ -1685,40 +1685,63 @@
         /* Биография */
         .bio-page {
             display: none;
-            padding: 120px 60px 60px;
-            max-width: 1200px;
-            margin: 0 auto;
+            flex-direction: column;
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            padding: 110px 48px 28px;
+            max-width: none;
+            margin: 0;
+            box-sizing: border-box;
+            background: #fff;
+            overflow: hidden;
+        }
+
+        .bio-title {
+            flex: 0 0 auto;
+            margin: 0 0 24px;
+            text-align: center;
+            font-size: 32px;
+            line-height: 1.2;
         }
 
         .bio-layout {
+            flex: 1 1 auto;
+            min-height: 0;
             display: grid;
-            grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-            gap: 48px;
-            align-items: start;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+            gap: 40px;
+            align-items: stretch;
         }
 
         .bio-photo {
-            width: 100%;
-            position: sticky;
-            top: 120px;
+            min-width: 0;
+            min-height: 0;
+            height: 100%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            overflow: hidden;
         }
 
         .bio-photo img {
             display: block;
-            width: 100%;
+            width: auto;
             height: auto;
-            object-fit: cover;
-            aspect-ratio: 3 / 4;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            object-position: left top;
         }
 
         .bio-text {
             min-width: 0;
-            padding-top: 8px;
-        }
-        
-        .bio-page h1 {
-            margin-bottom: 30px;
-            font-size: 32px;
+            min-height: 0;
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding-right: 8px;
+            -webkit-overflow-scrolling: touch;
         }
         
         .bio-page p {
@@ -1727,20 +1750,37 @@
             line-height: 1.8;
         }
 
+        .bio-page p:last-child {
+            margin-bottom: 0;
+        }
+
         @media (max-width: 768px) {
+            .bio-page {
+                padding: 96px 20px 20px;
+            }
+
+            .bio-title {
+                font-size: 26px;
+                margin-bottom: 16px;
+            }
+
             .bio-layout {
                 grid-template-columns: 1fr;
-                gap: 28px;
+                grid-template-rows: minmax(180px, 38vh) minmax(0, 1fr);
+                gap: 18px;
             }
 
             .bio-photo {
-                position: static;
-                max-width: 420px;
-                margin: 0 auto;
+                justify-content: center;
+            }
+
+            .bio-photo img {
+                object-position: center top;
+                max-height: 38vh;
             }
 
             .bio-text {
-                padding-top: 0;
+                padding-right: 0;
             }
         }
         
@@ -3652,12 +3692,12 @@
 
     <!-- Биография -->
     <div id="bio-page" class="bio-page">
+        <h1 class="bio-title" data-i18n="bio.title">Об авторе</h1>
         <div class="bio-layout">
             <div class="bio-photo">
                 <img src="images/about-author.jpg" alt="JANART STUDIO" data-i18n-alt="bio.photoAlt">
             </div>
             <div class="bio-text">
-                <h1 data-i18n="bio.title">Об авторе</h1>
                 <p data-i18n="bio.p1">Я работаю с цветом, рельефом и тишиной. В моих картинах нет сюжета в привычном смысле - только фактура, которая рождается слой за слоем. Я создаю объёмные абстракции из текстурной пасты, добавляю золото и серебро потали, а основу пишу в мягкой палитре белого, бежевого и глубокого изумрудного. Каждая работа - это ручной, медленный процесс: несколько слоёв, несколько дней, и ни одной одинаковой текстуры дважды.</p>
                 <p data-i18n="bio.p2"><strong>Моя история: искусство как опора</strong></p>
                 <p data-i18n="bio.p3">Абстракция пришла в мою жизнь не как карьерный выбор, а как способ пережить по-настоящему сложный период. В тот момент творчество стало моей главной точкой опоры. С тех пор я пишу картины иначе, чем художник, для которого это просто ремесло - каждая работа несёт в себе что-то настоящее, прожитое, а не придуманное для интерьерного каталога.</p>
@@ -9501,7 +9541,8 @@ function updateAdminGalleryIndicator() {
             const targetPage = document.getElementById(`${pageId}-page`);
             console.log('Целевая страница:', targetPage);
             if (targetPage) {
-                targetPage.style.display = 'block';
+                targetPage.style.display = pageId === 'bio' ? 'flex' : 'block';
+                document.body.style.overflow = pageId === 'bio' ? 'hidden' : '';
                 console.log('✅ Страница показана:', pageId);
                 
                 // Если переходим на страницу заказа, обновляем отображение корзины
