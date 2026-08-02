@@ -1734,6 +1734,14 @@
             object-position: left top;
         }
 
+        .bio-photo-mobile {
+            display: none !important;
+        }
+
+        .bio-photo-desktop {
+            display: block;
+        }
+
         .bio-text {
             min-width: 0;
             min-height: 0;
@@ -1756,7 +1764,13 @@
 
         @media (max-width: 768px) {
             .bio-page {
-                padding: 96px 20px 20px;
+                position: relative;
+                inset: auto;
+                height: auto;
+                min-height: 100vh;
+                overflow: visible;
+                padding: 96px 20px 48px;
+                z-index: auto;
             }
 
             .bio-title {
@@ -1765,21 +1779,37 @@
             }
 
             .bio-layout {
-                grid-template-columns: 1fr;
-                grid-template-rows: minmax(180px, 38vh) minmax(0, 1fr);
-                gap: 18px;
+                display: flex;
+                flex-direction: column;
+                flex: none;
+                height: auto;
+                min-height: 0;
+                gap: 20px;
             }
 
             .bio-photo {
+                height: auto;
                 justify-content: center;
+                overflow: visible;
             }
 
-            .bio-photo img {
-                object-position: center top;
-                max-height: 38vh;
+            .bio-photo-desktop {
+                display: none !important;
+            }
+
+            .bio-photo-mobile {
+                display: block !important;
+                width: 100%;
+                max-width: 100%;
+                max-height: none;
+                height: auto;
+                object-fit: cover;
+                object-position: center;
             }
 
             .bio-text {
+                height: auto;
+                overflow: visible;
                 padding-right: 0;
             }
         }
@@ -3695,7 +3725,8 @@
         <h1 class="bio-title" data-i18n="bio.title">Об авторе</h1>
         <div class="bio-layout">
             <div class="bio-photo">
-                <img src="images/about-author.jpg" alt="JANART STUDIO" data-i18n-alt="bio.photoAlt">
+                <img class="bio-photo-desktop" src="images/about-author.jpg" alt="JANART STUDIO" data-i18n-alt="bio.photoAlt">
+                <img class="bio-photo-mobile" src="images/about-author-mobile.jpg" alt="JANART STUDIO" data-i18n-alt="bio.photoAlt">
             </div>
             <div class="bio-text">
                 <p data-i18n="bio.p1">Я работаю с цветом, рельефом и тишиной. В моих картинах нет сюжета в привычном смысле - только фактура, которая рождается слой за слоем. Я создаю объёмные абстракции из текстурной пасты, добавляю золото и серебро потали, а основу пишу в мягкой палитре белого, бежевого и глубокого изумрудного. Каждая работа - это ручной, медленный процесс: несколько слоёв, несколько дней, и ни одной одинаковой текстуры дважды.</p>
@@ -9541,8 +9572,10 @@ function updateAdminGalleryIndicator() {
             const targetPage = document.getElementById(`${pageId}-page`);
             console.log('Целевая страница:', targetPage);
             if (targetPage) {
-                targetPage.style.display = pageId === 'bio' ? 'flex' : 'block';
-                document.body.style.overflow = pageId === 'bio' ? 'hidden' : '';
+                const isBio = pageId === 'bio';
+                const isMobile = window.matchMedia('(max-width: 768px)').matches;
+                targetPage.style.display = isBio ? 'flex' : 'block';
+                document.body.style.overflow = (isBio && !isMobile) ? 'hidden' : '';
                 console.log('✅ Страница показана:', pageId);
                 
                 // Если переходим на страницу заказа, обновляем отображение корзины
