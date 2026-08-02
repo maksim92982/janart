@@ -1795,7 +1795,58 @@
             margin-bottom: 30px;
             font-size: 32px;
         }
+
+        .contacts-info-page {
+            display: none;
+            padding: 120px 24px 80px;
+            max-width: 720px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        .contacts-info-page h1 {
+            margin-bottom: 28px;
+            font-size: 32px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .contacts-info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            align-items: center;
+            text-align: center;
+        }
+
+        .contacts-info-link {
+            display: block;
+            font-size: 20px;
+            line-height: 1.4;
+            word-break: break-word;
+            transition: opacity 0.3s ease;
+        }
+
+        .contacts-info-link:hover {
+            opacity: 0.7;
+        }
         
+        @media (max-width: 768px) {
+            .contacts-info-page {
+                padding-top: 96px;
+                padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+            }
+
+            .contacts-info-page h1 {
+                font-size: 26px;
+            }
+
+            .contacts-info-link {
+                font-size: 18px;
+            }
+        }
+
         .contact-form {
             display: flex;
             flex-direction: column;
@@ -2333,7 +2384,8 @@
             .gallery,
             .product-page,
             .bio-page,
-            .contact-page {
+            .contact-page,
+            .contacts-info-page {
                 padding-left: 20px;
                 padding-right: 20px;
             }
@@ -3757,24 +3809,13 @@
         </div>
     </div>
 
-    <!-- Контакты -->
-    <div id="contact-page" class="contact-page">
-        <h1 data-i18n="contact.title">Свяжитесь со мной</h1>
-        <form class="contact-form">
-            <div class="form-group">
-                <label for="name" data-i18n="contact.name">Имя</label>
-                <input type="text" id="name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" required>
-            </div>
-            <div class="form-group">
-                <label for="message" data-i18n="contact.message">Сообщение</label>
-                <textarea id="message" required></textarea>
-            </div>
-            <button type="submit" class="submit-button" data-i18n="contact.send">Отправить</button>
-        </form>
+    <!-- Контакты (полноценная страница, в основном для мобильной версии) -->
+    <div id="contacts-page" class="page contacts-info-page" style="display: none;">
+        <h1 data-i18n="nav.contacts">Контакты</h1>
+        <div class="contacts-info-list">
+            <a class="contacts-info-link" href="mailto:tatiana.janart@gmail.com">tatiana.janart@gmail.com</a>
+            <a class="contacts-info-link" href="tel:+381621856333">+381621856333</a>
+        </div>
     </div>
 
     <!-- Футер -->
@@ -3814,8 +3855,10 @@
             <div class="close-contacts" id="close-contacts">x</div>
             <h2 data-i18n="nav.contacts">Контакты</h2>
             <div class="contact-item">
-                <span class="contact-label">Email</span>
                 <a href="mailto:tatiana.janart@gmail.com">tatiana.janart@gmail.com</a>
+            </div>
+            <div class="contact-item">
+                <a href="tel:+381621856333">+381621856333</a>
             </div>
         </div>
     </div>
@@ -9085,20 +9128,18 @@ function renderGalleryItems(items, galleryContainer, accessibleLots = new Set())
                 });
             });
             
-            // Добавляем обработчики для контактов отдельно (только для desktop и mobile в меню, НЕ для футера)
-            const contactsLinks = document.querySelectorAll('#desktop-contacts-link, #mobile-contacts-link');
-            contactsLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
+            // Desktop contacts open modal; mobile contacts handled in initContactsModal
+            const desktopContactsNavLink = document.getElementById('desktop-contacts-link');
+            if (desktopContactsNavLink) {
+                desktopContactsNavLink.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log('Клик по контактам');
-                    
                     const contactsModal = document.getElementById('contacts-modal');
                     if (contactsModal) {
                         contactsModal.classList.add('active');
                     }
                 });
-            });
+            }
             
             // Для #contacts-link в футере делаем исключение - пусть работает mailto:
             const footerContactsLink = document.getElementById('contacts-link');
@@ -9192,31 +9233,7 @@ function renderGalleryItems(items, galleryContainer, accessibleLots = new Set())
             
             // Функция для обновления текста контактов в зависимости от устройства
             function updateContactsContent() {
-                const isMobile = window.innerWidth <= 768;
-                const contactItems = document.querySelectorAll('.contact-item');
-                
-                contactItems.forEach((item, index) => {
-                    const link = item.querySelector('a');
-                    if (link) {
-                        if (isMobile) {
-                            // Для мобильных устройств показываем только email полностью
-                            if (index === 2) { // Email
-                                link.textContent = 'tatiana.janart@gmail.com';
-                            } else {
-                                link.textContent = '';
-                            }
-                        } else {
-                            // Для ПК показываем полную информацию
-                            if (index === 0) { // Instagram
-                                link.textContent = '@janart_studio';
-                            } else if (index === 1) { // WhatsApp
-                                link.textContent = '+7 (904) 606 81 07';
-                            } else if (index === 2) { // Email
-                                link.textContent = 'tatiana.janart@gmail.com';
-                            }
-                        }
-                    }
-                });
+                // Контакты показываются напрямую (email + телефон), без подмены текста
             }
             
             // Обновляем контакты при загрузке и изменении размера окна
@@ -9250,8 +9267,7 @@ function renderGalleryItems(items, galleryContainer, accessibleLots = new Set())
             if (mobileContactsLink) {
                 mobileContactsLink.addEventListener('click', function(e) {
                     e.preventDefault();
-                    contactsModal.classList.add('active');
-                    // Закрываем мобильное меню после выбора пункта
+                    showPage('contacts');
                     const mobileNav = document.querySelector('.mobile-nav');
                     if (mobileNav) {
                         mobileNav.classList.remove('active');
@@ -9263,7 +9279,7 @@ function renderGalleryItems(items, galleryContainer, accessibleLots = new Set())
                 mobileFooterContactsLink.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    contactsModal.classList.add('active');
+                    showPage('contacts');
                 });
             }
             
@@ -9610,7 +9626,7 @@ function updateAdminGalleryIndicator() {
             }
             
             // Скрываем все возможные страницы
-            const allPages = document.querySelectorAll('.page, .product-page, .bio-page, .contact-page');
+            const allPages = document.querySelectorAll('.page, .product-page, .bio-page, .contact-page, .contacts-info-page');
             console.log('Найдено страниц для скрытия:', allPages.length);
             allPages.forEach(page => {
                 page.style.display = 'none';
