@@ -1709,14 +1709,19 @@
             flex: 1 1 auto;
             min-height: 0;
             display: grid;
-            grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-            gap: 40px;
+            grid-template-columns: auto minmax(0, 1fr);
+            column-gap: clamp(20px, 2.2vw, 32px);
             align-items: stretch;
+            width: 100%;
+            max-width: 1180px;
+            margin-inline: auto;
         }
 
         .bio-photo {
             min-width: 0;
             min-height: 0;
+            width: max-content;
+            max-width: min(46vw, 560px);
             height: 100%;
             display: flex;
             align-items: flex-start;
@@ -1740,6 +1745,10 @@
 
         .bio-photo-desktop {
             display: block;
+            height: 100%;
+            width: auto;
+            max-width: min(46vw, 560px);
+            max-height: 100%;
         }
 
         .bio-text {
@@ -1749,6 +1758,7 @@
             overflow-x: hidden;
             overflow-y: auto;
             padding-right: 8px;
+            max-width: 38rem;
             -webkit-overflow-scrolling: touch;
         }
         
@@ -1785,9 +1795,13 @@
                 height: auto;
                 min-height: 0;
                 gap: 20px;
+                max-width: none;
+                margin-inline: 0;
             }
 
             .bio-photo {
+                width: 100%;
+                max-width: none;
                 height: auto;
                 justify-content: center;
                 overflow: visible;
@@ -1811,6 +1825,7 @@
                 height: auto;
                 overflow: visible;
                 padding-right: 0;
+                max-width: none;
             }
         }
         
