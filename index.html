@@ -1748,7 +1748,7 @@
 
         @media (max-width: 768px) {
             .bio-page {
-                padding: 96px 20px 48px;
+                padding: 96px 20px calc(80px + env(safe-area-inset-bottom, 0px));
             }
 
             .bio-title {
@@ -2039,6 +2039,10 @@
         }
         
         .mobile-bio-link {
+            display: none;
+        }
+
+        .mobile-footer-bar {
             display: none;
         }
         
@@ -2394,38 +2398,78 @@
             
             /* Мобильная версия футера */
             footer {
-                padding: 40px 20px 20px; /* Уменьшен отступ снизу в 2 раза */
-            }
-            
-            .social-links {
-                flex-direction: row;
-                gap: 15px;
-                justify-content: space-around;
-            }
-            
-            .social-links a {
-                font-size: 16px;
-                padding: 10px 15px;
-                flex: 1;
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 900;
+                margin-top: 0;
+                padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+                background: rgba(255, 255, 255, 0.96);
+                border-top: 1px solid #eee;
                 text-align: center;
             }
-            
-            .mobile-bio-link {
-                display: block;
-                font-size: 18px;
-                padding: 12px 20px;
-                margin-bottom: 20px;
-                cursor: pointer;
+
+            body {
+                padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
             }
-            
-            .mobile-bio-link:hover {
+
+            .mobile-footer-bar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+                width: 100%;
+                white-space: nowrap;
+            }
+
+            .mobile-footer-link {
+                flex: 1 1 auto;
+                min-width: 0;
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 16px;
+                font-weight: 500;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: #333;
+                cursor: pointer;
+                text-align: center;
+                transition: opacity 0.3s ease;
+                padding: 8px 4px;
+            }
+
+            .mobile-footer-link:hover {
                 opacity: 0.7;
             }
-            
-            /* Скрываем стандартные ссылки в футере на мобильных */
-            /* Показываем все социальные ссылки на мобильных */
-            .social-links a {
-                display: block !important;
+
+            .mobile-footer-lang {
+                flex: 0 0 auto;
+                margin: 0;
+                list-style: none;
+            }
+
+            .mobile-footer-lang .lang-switcher__btn {
+                padding: 4px 6px;
+            }
+
+            .mobile-footer-lang .lang-switcher__menu {
+                top: auto;
+                bottom: calc(100% + 8px);
+                right: 0;
+                left: auto;
+                position: absolute;
+                margin-top: 0;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+                border: 1px solid #e5e5e5;
+                min-width: 150px;
+            }
+
+            .mobile-bio-link {
+                display: none !important;
+            }
+
+            .social-links {
+                display: none !important;
             }
             
             /* Текст контактов всегда виден */
@@ -2474,7 +2518,13 @@
             
             /* Еще больше уменьшаем отступ в футере для мобильных */
             footer {
-                padding: 30px 15px 15px;
+                padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+            }
+
+            .mobile-footer-link {
+                font-size: 14px;
+                letter-spacing: 0.8px;
+                padding: 6px 2px;
             }
         }
 
@@ -3729,6 +3779,21 @@
 
     <!-- Футер -->
     <footer>
+        <nav class="mobile-footer-bar" aria-label="Mobile footer">
+            <a href="#" class="mobile-footer-link" data-page="bio" data-i18n="nav.bio">Об авторе</a>
+            <a href="#" class="mobile-footer-link" id="mobile-footer-contacts-link" data-i18n="nav.contacts">Контакты</a>
+            <div class="lang-switcher mobile-footer-lang">
+                <button type="button" class="lang-switcher__btn" id="lang-switcher-btn-footer" aria-expanded="false" aria-haspopup="true" data-i18n-aria="lang.label">
+                    <span class="lang-switcher__flag" id="lang-current-flag-footer">🇷🇺</span>
+                    <span class="lang-switcher__code" id="lang-current-code-footer">RU</span>
+                </button>
+                <div class="lang-switcher__menu" id="lang-switcher-menu-footer" hidden>
+                    <button type="button" class="lang-switcher__option" data-lang="ru"><span>🇷🇺</span><span>Русский</span></button>
+                    <button type="button" class="lang-switcher__option" data-lang="en"><span>🇬🇧</span><span>English</span></button>
+                    <button type="button" class="lang-switcher__option" data-lang="sr"><span>🇷🇸</span><span>Srpski</span></button>
+                </div>
+            </div>
+        </nav>
         <div class="mobile-bio-link" data-page="bio" data-i18n="nav.bio">Об авторе</div>
         <div class="social-links">
             <a href="javascript:void(0)" onclick="showPage('agreement')" class="social-link-agreement">
@@ -4235,10 +4300,14 @@
             const codeEl = document.getElementById('lang-current-code');
             const flagElM = document.getElementById('lang-current-flag-mobile');
             const codeElM = document.getElementById('lang-current-code-mobile');
+            const flagElF = document.getElementById('lang-current-flag-footer');
+            const codeElF = document.getElementById('lang-current-code-footer');
             if (flagEl) flagEl.textContent = flag;
             if (codeEl) codeEl.textContent = code;
             if (flagElM) flagElM.textContent = flag;
             if (codeElM) codeElM.textContent = code;
+            if (flagElF) flagElF.textContent = flag;
+            if (codeElF) codeElF.textContent = code;
 
             document.querySelectorAll('.lang-switcher__option').forEach(btn => {
                 btn.classList.toggle('is-active', btn.getAttribute('data-lang') === lang);
@@ -4306,6 +4375,7 @@
             }
             bind('lang-switcher-btn', 'lang-switcher-menu');
             bind('lang-switcher-btn-mobile', 'lang-switcher-menu-mobile');
+            bind('lang-switcher-btn-footer', 'lang-switcher-menu-footer');
             document.addEventListener('click', () => {
                 document.querySelectorAll('.lang-switcher__menu').forEach(m => { m.hidden = true; });
                 document.querySelectorAll('.lang-switcher__btn').forEach(b => b.setAttribute('aria-expanded', 'false'));
@@ -9065,15 +9135,15 @@ function renderGalleryItems(items, galleryContainer, accessibleLots = new Set())
     }
             
             // Мобильная кнопка "Об авторе" в футере
-            const mobileBioLink = document.querySelector('.mobile-bio-link');
-            if (mobileBioLink) {
+            const mobileBioLinks = document.querySelectorAll('.mobile-bio-link, .mobile-footer-link[data-page="bio"]');
+            mobileBioLinks.forEach((mobileBioLink) => {
                 mobileBioLink.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
                     console.log('Клик по "Об авторе" в футере');
                     showPage('bio');
                 });
-            }
+            });
             
             // Мобильное меню
             const mobileMenu = document.querySelector('.mobile-menu');
@@ -9116,6 +9186,7 @@ function renderGalleryItems(items, galleryContainer, accessibleLots = new Set())
             const contactsLink = document.getElementById('contacts-link');
             const desktopContactsLink = document.getElementById('desktop-contacts-link');
             const mobileContactsLink = document.getElementById('mobile-contacts-link');
+            const mobileFooterContactsLink = document.getElementById('mobile-footer-contacts-link');
             const contactsModal = document.getElementById('contacts-modal');
             const closeContacts = document.getElementById('close-contacts');
             
@@ -9185,6 +9256,14 @@ function renderGalleryItems(items, galleryContainer, accessibleLots = new Set())
                     if (mobileNav) {
                         mobileNav.classList.remove('active');
                     }
+                });
+            }
+
+            if (mobileFooterContactsLink) {
+                mobileFooterContactsLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    contactsModal.classList.add('active');
                 });
             }
             
