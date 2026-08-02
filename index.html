@@ -292,6 +292,113 @@
             opacity: 0.7;
         }
         
+
+        /* Temporarily hidden nav items */
+        .temp-hidden {
+            display: none !important;
+        }
+
+        /* Language switcher */
+        .lang-switcher {
+            position: relative;
+            margin-left: 40px;
+            list-style: none;
+        }
+
+        .lang-switcher__btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: none;
+            border: 1px solid transparent;
+            cursor: pointer;
+            padding: 4px 6px;
+            font-size: 16px;
+            line-height: 1;
+            border-radius: 4px;
+            transition: opacity 0.2s ease, border-color 0.2s ease;
+        }
+
+        .lang-switcher__btn:hover {
+            opacity: 0.75;
+        }
+
+        .lang-switcher__btn[aria-expanded="true"] {
+            border-color: #ddd;
+        }
+
+        .lang-switcher__flag {
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .lang-switcher__code {
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #333;
+        }
+
+        .lang-switcher__menu {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            min-width: 150px;
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            z-index: 1100;
+            padding: 6px 0;
+        }
+
+        .lang-switcher__menu[hidden] {
+            display: none !important;
+        }
+
+        .lang-switcher__option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            padding: 10px 14px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #222;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        .lang-switcher__option:hover,
+        .lang-switcher__option.is-active {
+            background: #f5f5f5;
+        }
+
+        .mobile-nav .lang-switcher {
+            margin: 24px 0 0;
+            list-style: none;
+        }
+
+        .mobile-nav .lang-switcher__menu {
+            position: static;
+            margin-top: 8px;
+            box-shadow: none;
+            border: none;
+            min-width: 0;
+        }
+
+        .mobile-nav .lang-switcher__btn {
+            font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .lang-switcher.desktop-only {
+                display: none !important;
+            }
+        }
+
         /* Мобильное меню */
         .mobile-menu {
             display: none;
@@ -2818,31 +2925,51 @@
         <div class="logo" id="home-logo" onclick="if(typeof showPage === 'function') { console.log('🏠 Клик по логотипу (HTML) - переходим на главную'); showPage('home'); } else { console.error('❌ Функция showPage не найдена'); }">JANART STUDIO</div>
         <nav>
             <ul>
-                <li><a href="#" class="nav-link cart-counter" data-page="order" data-count="0">Корзина</a></li>
-                <li><a href="#" class="nav-link" data-page="gallery">Галерея</a></li>
-                <li><a href="#" class="nav-link" data-page="gallery2">Мастер-класс</a></li>
-                <li><a href="#" class="nav-link" id="admin-access-link">Личный кабинет</a></li>
-                <li><a href="#" class="nav-link" data-page="bio">Об авторе</a></li>
-                <li><a href="#" class="nav-link" id="desktop-contacts-link">Контакты</a></li>
+                <li><a href="#" class="nav-link cart-counter" data-page="order" data-count="0" data-i18n="nav.cart">Корзина</a></li>
+                <li><a href="#" class="nav-link" data-page="gallery" data-i18n="nav.gallery">Галерея</a></li>
+                <li class="temp-hidden"><a href="#" class="nav-link" data-page="gallery2">Мастер-класс</a></li>
+                <li class="temp-hidden"><a href="#" class="nav-link" id="admin-access-link">Личный кабинет</a></li>
+                <li><a href="#" class="nav-link" data-page="bio" data-i18n="nav.bio">Об авторе</a></li>
+                <li><a href="#" class="nav-link" id="desktop-contacts-link" data-i18n="nav.contacts">Контакты</a></li>
+                <li class="lang-switcher desktop-only">
+                    <button type="button" class="lang-switcher__btn" id="lang-switcher-btn" aria-expanded="false" aria-haspopup="true" data-i18n-aria="lang.label">
+                        <span class="lang-switcher__flag" id="lang-current-flag">🇷🇺</span>
+                        <span class="lang-switcher__code" id="lang-current-code">RU</span>
+                    </button>
+                    <div class="lang-switcher__menu" id="lang-switcher-menu" hidden>
+                        <button type="button" class="lang-switcher__option" data-lang="ru"><span>🇷🇺</span><span>Русский</span></button>
+                        <button type="button" class="lang-switcher__option" data-lang="en"><span>🇬🇧</span><span>English</span></button>
+                    </div>
+                </li>
             </ul>
         </nav>
-        <div class="mobile-cart-link cart-counter" data-page="order" data-count="0">Корзина</div>
-        <div class="mobile-gallery-link" data-page="gallery">Галерея</div>
-        <div class="mobile-gallery-link" data-page="gallery2">Мастер-класс</div>
-        <div class="mobile-menu">Меню</div>
+        <div class="mobile-cart-link cart-counter" data-page="order" data-count="0" data-i18n="nav.cart">Корзина</div>
+        <div class="mobile-gallery-link" data-page="gallery" data-i18n="nav.gallery">Галерея</div>
+        <div class="mobile-gallery-link temp-hidden" data-page="gallery2">Мастер-класс</div>
+        <div class="mobile-menu" data-i18n="nav.menu">Меню</div>
     </header>
 
     <!-- Мобильное меню (добавлено в HTML) -->
     <div class="mobile-nav">
         <div class="close-menu">x</div>
         <ul>
-            <li><a href="#" class="nav-link" data-page="home">Главная</a></li>
-            <li><a href="#" class="nav-link" data-page="order">Корзина</a></li>
-            <li><a href="#" class="nav-link" data-page="gallery">Галерея</a></li>
-            <li><a href="#" class="nav-link" data-page="gallery2">Мастер-класс</a></li>
-            <li><a href="#" class="nav-link" id="mobile-admin-access-link">Личный кабинет</a></li>
-            <li><a href="#" class="nav-link" data-page="bio">Об авторе</a></li>
-            <li><a href="#" class="nav-link" id="mobile-contacts-link">Контакты</a></li>
+            <li><a href="#" class="nav-link" data-page="home" data-i18n="nav.home">Главная</a></li>
+            <li><a href="#" class="nav-link" data-page="order" data-i18n="nav.cart">Корзина</a></li>
+            <li><a href="#" class="nav-link" data-page="gallery" data-i18n="nav.gallery">Галерея</a></li>
+            <li class="temp-hidden"><a href="#" class="nav-link" data-page="gallery2">Мастер-класс</a></li>
+            <li class="temp-hidden"><a href="#" class="nav-link" id="mobile-admin-access-link">Личный кабинет</a></li>
+            <li><a href="#" class="nav-link" data-page="bio" data-i18n="nav.bio">Об авторе</a></li>
+            <li><a href="#" class="nav-link" id="mobile-contacts-link" data-i18n="nav.contacts">Контакты</a></li>
+            <li class="lang-switcher">
+                <button type="button" class="lang-switcher__btn" id="lang-switcher-btn-mobile" aria-expanded="false" aria-haspopup="true" data-i18n-aria="lang.label">
+                    <span class="lang-switcher__flag" id="lang-current-flag-mobile">🇷🇺</span>
+                    <span class="lang-switcher__code" id="lang-current-code-mobile">RU</span>
+                </button>
+                <div class="lang-switcher__menu" id="lang-switcher-menu-mobile" hidden>
+                    <button type="button" class="lang-switcher__option" data-lang="ru"><span>🇷🇺</span><span>Русский</span></button>
+                    <button type="button" class="lang-switcher__option" data-lang="en"><span>🇬🇧</span><span>English</span></button>
+                </div>
+            </li>
         </ul>
     </div>
 
@@ -2930,7 +3057,7 @@
     <div id="home-page" class="page">
         <div class="main-content">
             <div class="hero-image">
-                <img src="images/freepik-export-20241021134528sZDq.jpeg" alt="Главное изображение JANART STUDIO" id="main-hero">
+                <img src="images/freepik-export-20241021134528sZDq.jpeg" alt="Главное изображение JANART STUDIO" id="main-hero" data-i18n-alt="home.heroAlt">
             </div>
         </div>
     </div>
@@ -2955,8 +3082,8 @@
     <div id="order-page" class="page" style="display: none;">
         <div class="order-container">
             <div class="order-header">
-                <h1>Ваш заказ</h1>
-                <button class="back-to-gallery-btn" onclick="showPage('gallery')">← Вернуться в галерею</button>
+                <h1 data-i18n="order.title">Ваш заказ</h1>
+                <button class="back-to-gallery-btn" onclick="showPage('gallery')" data-i18n="order.backGallery">← Вернуться в галерею</button>
             </div>
             
             <div class="cart-items" id="cart-items">
@@ -2965,14 +3092,14 @@
             
             <div class="order-summary">
                 <div class="total-price">
-                    <h2>К оплате: <span id="total-amount">0</span> ₽</h2>
+                    <h2><span data-i18n="order.toPay">К оплате:</span> <span id="total-amount">0</span> ₽</h2>
                 </div>
                 
                 <div class="contact-info">
-                    <h3>Контактные данные</h3>
+                    <h3 data-i18n="order.contactTitle">Контактные данные</h3>
                     <div class="contact-field">
-                        <label for="contact-input">Введите телефон/e-mail для связи:</label>
-                        <input type="text" id="contact-input" placeholder="+7 (999) 123-45-67 или email@example.com" class="contact-input">
+                        <label for="contact-input" data-i18n="order.contactLabel">Введите телефон/e-mail для связи:</label>
+                        <input type="text" id="contact-input" placeholder="+7 (999) 123-45-67 или email@example.com" class="contact-input" data-i18n-placeholder="order.contactPlaceholder">
                     </div>
                 </div>
                 
@@ -2980,16 +3107,16 @@
                         <label class="agreement-checkbox">
                             <input type="checkbox" id="accept-agreement" required>
                             <span class="checkmark"></span>
-                            Я принимаю&nbsp;<a href="javascript:void(0)" onclick="showPage('agreement')">договор</a>,&nbsp;<a href="javascript:void(0)" onclick="showPage('privacy')">политику обработки персональных данных</a>&nbsp;и&nbsp;<a href="javascript:void(0)" onclick="showPage('refund')">условия возврата и отмены платежа</a>
+                            <span data-i18n-html="order.agreementHtml">Я принимаю&nbsp;<a href="javascript:void(0)" onclick="showPage('agreement')">договор</a>,&nbsp;<a href="javascript:void(0)" onclick="showPage('privacy')">политику обработки персональных данных</a>&nbsp;и&nbsp;<a href="javascript:void(0)" onclick="showPage('refund')">условия возврата и отмены платежа</a></span>
                         </label>
                 </div>
                 
                 <div class="order-actions">
-                    <button class="buy-btn" id="proceed-to-payment" disabled>Перейти к оплате</button>
+                    <button class="buy-btn" id="proceed-to-payment" disabled data-i18n="order.pay">Перейти к оплате</button>
                 </div>
                 <div class="payment-widget">
-                    <p class="payment-widget__title">Смарт оплата</p>
-                    <p id="smart-payment-status" class="payment-widget__status">После подтверждения заказа вы перейдёте на страницу оплаты Сам.Эквайринг.</p>
+                    <p class="payment-widget__title" data-i18n="order.smartPay">Смарт оплата</p>
+                    <p id="smart-payment-status" class="payment-widget__status" data-i18n="order.smartPayStatus">После подтверждения заказа вы перейдёте на страницу оплаты Сам.Эквайринг.</p>
                 </div>
             </div>
         </div>
@@ -2999,11 +3126,11 @@
     <div id="agreement-page" class="page" style="display: none;">
         <div class="document-container">
             <div class="document-header">
-                <h1>Договор об оказании услуг (публичная оферта)</h1>
-                <button class="back-button" onclick="showPage('order')">← Назад к заказу</button>
+                <h1 data-i18n="docs.agreementTitle">Договор об оказании услуг (публичная оферта)</h1>
+                <button class="back-button" onclick="showPage('order')" data-i18n="order.backOrder">← Назад к заказу</button>
             </div>
             
-            <div class="document-content">
+            <div class="document-content" data-lang-content="ru">
                 <p>Александрова Татьяна Сергеевна, плательщик налога на профессиональный доход (самозанятая), ИНН 780434270507 (далее — Исполнитель) настоящей публичной офертой предлагает любому физическому или юридическому лицу, а также индивидуальному предпринимателю (далее — Заказчик) заключить настоящий договор об оказании услуг на указанных ниже условиях.</p>
 
                 <h3>1. Термины и определения</h3>
@@ -3045,6 +3172,35 @@
                 Сайт: https://janart-studio.ru/<br>
                 E-mail: tatiana.janart@gmail.com</p>
             </div>
+            <div class="document-content" data-lang-content="en" hidden>
+                <p>Tatiana Sergeevna Alexandrova, a professional income tax payer (self-employed), TIN 780434270507 (the “Contractor”), offers any individual or legal entity, as well as any sole proprietor (the “Customer”), to enter into this service agreement on the terms below.</p>
+                <h3>1. Terms</h3>
+                <p>1.1. Agreement — this service agreement permanently published on the Contractor’s website at https://janart-studio.ru/.</p>
+                <p>1.2. Acceptance — the Customer’s acceptance of this public offer. Acceptance means clicking the “Proceed to payment” button under the formed order on https://janart-studio.ru/. Full and unconditional acceptance is payment for the Contractor’s services.</p>
+                <p>1.3. Rates — the list of the Contractor’s services and prices shown on the website.</p>
+                <h3>2. Subject</h3>
+                <p>2.1. The Customer orders and pays for, and the Contractor undertakes, the sale of paintings.</p>
+                <p>2.2. The list of services and prices is contained in the product information on the website.</p>
+                <p>2.3. By accepting the Agreement, the Customer confirms that they have read, agree with, and fully accept all of its terms.</p>
+                <h3>3. Rights and obligations</h3>
+                <p>3.1. The Contractor shall provide the paintings, ensure proper packaging and delivery information, and provide information needed to receive the order.</p>
+                <p>3.2. The Customer shall pay on time, provide accurate contact details, and accept delivered paintings while following storage conditions.</p>
+                <h3>4. Price and payment</h3>
+                <p>4.1. Prices are determined by the current prices on the Contractor’s website.</p>
+                <p>4.2. Payment is made by bank transfer to the Contractor’s account via the payment service.</p>
+                <p>4.3. Payment is deemed made when funds are credited to the Contractor’s account.</p>
+                <h3>5. Liability</h3>
+                <p>5.1. For failure to perform or improper performance of obligations, the parties are liable under the applicable laws of the Russian Federation.</p>
+                <h3>6. Final provisions</h3>
+                <p>6.1. The Agreement enters into force upon acceptance and remains in effect until the parties fully perform their obligations.</p>
+                <p>6.2. Disputes are resolved by negotiation, and if agreement is impossible — in court under the laws of the Russian Federation.</p>
+                <h3>Contractor details</h3>
+                <p>Contractor: Tatiana Sergeevna Alexandrova<br>
+                Status: professional income tax payer (self-employed)<br>
+                TIN: 780434270507<br>
+                Website: https://janart-studio.ru/<br>
+                E-mail: tatiana.janart@gmail.com</p>
+</div>
         </div>
     </div>
 
@@ -3052,11 +3208,11 @@
     <div id="pricing-page" class="page" style="display: none;">
         <div class="document-container">
             <div class="document-header">
-                <h1>Тарифы и цены</h1>
-                <button class="back-button" onclick="showPage('order')">← Назад к заказу</button>
+                <h1 data-i18n="docs.pricingTitle">Тарифы и цены</h1>
+                <button class="back-button" onclick="showPage('order')" data-i18n="order.backOrder">← Назад к заказу</button>
             </div>
             
-            <div class="document-content">
+            <div class="document-content" data-lang-content="ru">
                 <h3>Цены на картины</h3>
                 <p>Цены на картины указаны в галерее и включают в себя:</p>
                 <ul>
@@ -3081,17 +3237,22 @@
                     <li>Электронные платежи</li>
                 </ul>
             </div>
+            <div class="document-content" data-lang-content="en" hidden>
+                <p>Current prices for paintings are listed on the product pages in the Gallery section of the website.</p>
+                <p>All prices are shown in Russian rubles (₽) unless otherwise stated.</p>
+                <p>The Contractor may update prices; the price valid at the moment of order payment applies.</p>
+</div>
         </div>
     </div>
     <!-- Страница возврата -->
     <div id="refund-page" class="page" style="display: none;">
         <div class="document-container">
             <div class="document-header">
-                <h1>Условия возврата и отмены платежа</h1>
-                <button class="back-button" onclick="showPage('order')">← Назад к заказу</button>
+                <h1 data-i18n="docs.refundTitle">Условия возврата и отмены платежа</h1>
+                <button class="back-button" onclick="showPage('order')" data-i18n="order.backOrder">← Назад к заказу</button>
             </div>
             
-            <div class="document-content">
+            <div class="document-content" data-lang-content="ru">
                 <p>Настоящие условия определяют порядок возврата денежных средств и отмены платежей при приобретении картин на сайте https://janart-studio.ru/.</p>
 
                 <h3>1. Общие положения</h3>
@@ -3124,6 +3285,33 @@
                 <h3>6. Контактная информация</h3>
                 <p>По вопросам возврата и отмены платежа обращайтесь по адресу: tatiana.janart@gmail.com</p>
             </div>
+            <div class="document-content" data-lang-content="en" hidden>
+                <p>These terms define the procedure for refunds and payment cancellations when purchasing paintings on https://janart-studio.ru/.</p>
+                <h3>1. General</h3>
+                <p>1.1. Refunds and payment cancellations are handled in accordance with the applicable laws of the Russian Federation.</p>
+                <p>1.2. All refund and cancellation requests are reviewed individually.</p>
+                <h3>2. When a refund is possible</h3>
+                <p>2.1. A refund or payment cancellation is possible in the following cases:</p>
+                <p>2.1.1. A technical error during payment;</p>
+                <p>2.1.2. A duplicate payment;</p>
+                <p>2.1.3. Cancellation within 14 days of payment, provided the painting has not been shipped.</p>
+                <h3>3. When a refund is not available</h3>
+                <p>3.1. Refunds are not provided if:</p>
+                <p>3.1.1. The painting has already been shipped;</p>
+                <p>3.1.2. More than 14 days have passed since payment;</p>
+                <p>3.1.3. The painting was damaged by the buyer;</p>
+                <p>3.1.4. The buyer received the goods specified in the order and accepted the delivery terms.</p>
+                <h3>4. Refund procedure</h3>
+                <p>4.1. To request a refund you must:</p>
+                <p>4.1.1. Contact: tatiana.janart@gmail.com;</p>
+                <p>4.1.2. Provide the order number and reason for the refund;</p>
+                <p>4.1.3. Provide documents confirming the payment.</p>
+                <h3>5. Refund timing</h3>
+                <p>5.1. Refunds are processed within 10 business days after a positive decision.</p>
+                <p>5.2. Refunds are made using the same method as the original payment.</p>
+                <h3>6. Contact information</h3>
+                <p>For refund and payment cancellation questions, contact: tatiana.janart@gmail.com</p>
+</div>
         </div>
     </div>
 
@@ -3131,11 +3319,11 @@
     <div id="privacy-page" class="page" style="display: none;">
         <div class="document-container">
             <div class="document-header">
-                <h1>Политика обработки персональных данных</h1>
-                <button class="back-button" onclick="showPage('home')">← Назад</button>
+                <h1 data-i18n="docs.privacyTitle">Политика обработки персональных данных</h1>
+                <button class="back-button" onclick="showPage('home')" data-i18n="docs.back">← Назад</button>
             </div>
             
-            <div class="document-content">
+            <div class="document-content" data-lang-content="ru">
                 <p><strong>Редакция от 15.05.2026</strong></p>
 
                 <h3>Общие положения</h3>
@@ -3196,6 +3384,35 @@
                 <h3>Контактная информация</h3>
                 <p>По вопросам, связанным с обработкой персональных данных, вы можете обратиться к Оператору по адресу электронной почты: <a href="mailto:tatiana.janart@gmail.com">tatiana.janart@gmail.com</a></p>
             </div>
+            <div class="document-content" data-lang-content="en" hidden>
+                <p><strong>Effective as of 15.05.2026</strong></p>
+                <h3>General provisions</h3>
+                <p>This Personal Data Processing Policy (the “Policy”) defines how personal data of users of https://janart-studio.ru/ (the “Website”) is processed.</p>
+                <p>The personal data operator is Tatiana Sergeevna Alexandrova, a professional income tax payer (self-employed), TIN 780434270507.</p>
+                <p>This Policy is prepared in accordance with Federal Law No. 152-FZ “On Personal Data” dated 27.07.2006.</p>
+                <h3>Terms</h3>
+                <p><strong>Operator</strong> — the person processing personal data: Tatiana Sergeevna Alexandrova, TIN 780434270507.</p>
+                <p><strong>Personal data</strong> — any information relating to a directly or indirectly identified or identifiable individual.</p>
+                <p><strong>Processing of personal data</strong> — any action or set of actions performed with personal data, with or without automation tools.</p>
+                <h3>Processing principles</h3>
+                <p>The Operator follows these principles:</p>
+                <ul>
+                    <li>Processing is lawful and fair;</li>
+                    <li>Processing is limited to specific, predefined, and lawful purposes;</li>
+                    <li>Processing incompatible with collection purposes is not allowed;</li>
+                    <li>Only personal data relevant to the processing purposes is processed.</li>
+                </ul>
+                <h3>Processing purposes</h3>
+                <p>The Operator processes personal data to:</p>
+                <ul>
+                    <li>Process orders and operate the website;</li>
+                    <li>Communicate with buyers and provide order status information;</li>
+                    <li>Fulfil contractual and legal obligations;</li>
+                    <li>Improve service quality.</li>
+                </ul>
+                <h3>Contact information</h3>
+                <p>For questions related to personal data processing, contact the Operator by email: <a href="mailto:tatiana.janart@gmail.com">tatiana.janart@gmail.com</a></p>
+</div>
         </div>
     </div>
     <!-- Модальное окно для просмотра картины -->
@@ -3203,14 +3420,14 @@
         <div class="painting-modal__overlay"></div>
         <div class="painting-modal__container">
             <div class="painting-modal__back">
-                <button type="button" class="painting-modal__back-btn" aria-label="Назад в галерею">
+                <button type="button" class="painting-modal__back-btn" aria-label="Назад в галерею" data-i18n-aria="aria.backGallery">
                     <svg width="18px" height="18px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <polyline fill="none" stroke="#000" stroke-width="1" points="14,6 8,12 14,18"></polyline>
                     </svg>
                 </button>
             </div>
             <div class="painting-modal__close">
-                <button type="button" class="painting-modal__close-btn" aria-label="Закрыть">
+                <button type="button" class="painting-modal__close-btn" aria-label="Закрыть" data-i18n-aria="aria.close">
                     <svg width="23px" height="23px" viewBox="0 0 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg">
                         <g stroke="none" stroke-width="1" fill="#000" fill-rule="evenodd">
                             <rect transform="translate(11.313708, 11.313708) rotate(-45.000000) translate(-11.313708, -11.313708) " x="10.3137085" y="-3.6862915" width="2" height="30"></rect>
@@ -3235,12 +3452,12 @@
                                 </div>
                             </div>
                             <div class="painting-slider__nav">
-                                <button class="painting-slider__arrow painting-slider__arrow--prev" id="prev-arrow" aria-label="Предыдущее изображение">
+                                <button class="painting-slider__arrow painting-slider__arrow--prev" id="prev-arrow" aria-label="Предыдущее изображение" data-i18n-aria="aria.prevImage">
                                     <svg width="7px" height="13px" viewBox="0 0 7.3 13" xmlns="http://www.w3.org/2000/svg">
                                         <polyline fill="none" stroke="#fff" stroke-linejoin="butt" stroke-linecap="butt" stroke-width="2" points="6.5,0.5 0.5,6.5 6.5,12.5"/>
                                     </svg>
                                 </button>
-                                <button class="painting-slider__arrow painting-slider__arrow--next" id="next-arrow" aria-label="Следующее изображение">
+                                <button class="painting-slider__arrow painting-slider__arrow--next" id="next-arrow" aria-label="Следующее изображение" data-i18n-aria="aria.nextImage">
                                     <svg width="7px" height="13px" viewBox="0 0 7.3 13" xmlns="http://www.w3.org/2000/svg">
                                         <polyline fill="none" stroke="#fff" stroke-linejoin="butt" stroke-linecap="butt" stroke-width="2" points="0.5,0.5 6.5,6.5 0.5,12.5"/>
                                     </svg>
@@ -3264,7 +3481,7 @@
                             </div>
                             
                             <div class="painting-modal__mobile-actions">
-                                <button class="painting-modal__btn painting-modal__btn--primary" id="buy-painting-btn-mobile">Купить</button>
+                                <button class="painting-modal__btn painting-modal__btn--primary" id="buy-painting-btn-mobile" data-i18n="btn.buy">Купить</button>
                             </div>
                         </div>
                     </div>
@@ -3282,7 +3499,7 @@
                     </div>
                     
                     <div class="painting-modal__actions">
-                        <button class="painting-modal__btn painting-modal__btn--primary" id="buy-painting-btn">Купить</button>
+                        <button class="painting-modal__btn painting-modal__btn--primary" id="buy-painting-btn" data-i18n="btn.buy">Купить</button>
                     </div>
                 </div>
             </div>
@@ -3296,20 +3513,20 @@
 
     <!-- Биография -->
     <div id="bio-page" class="bio-page">
-        <h1>Об авторе</h1>
-        <p>Я работаю с цветом, рельефом и тишиной. В моих картинах нет сюжета в привычном смысле - только фактура, которая рождается слой за слоем. Я создаю объёмные абстракции из текстурной пасты, добавляю золото и серебро потали, а основу пишу в мягкой палитре белого, бежевого и глубокого изумрудного. Каждая работа - это ручной, медленный процесс: несколько слоёв, несколько дней, и ни одной одинаковой текстуры дважды.</p>
-        <p>Моя история: искусство как опора</p>
-        <p>Абстракция пришла в мою жизнь не как карьерный выбор, а как способ пережить по-настоящему сложный период. В тот момент творчество стало моей главной точкой опоры. С тех пор я пишу картины иначе, чем художник, для которого это просто ремесло - каждая работа несёт в себе что-то настоящее, прожитое, а не придуманное для интерьерного каталога.</p>
-        <p>Почему выбирают мои работы</p>
-        <p>Я не работаю сериями на поток - каждая картина создаётся в одном экземпляре, без повторений и тиражей. Вы покупаете не декор, а объект, у которого есть автор, история и характер: рельеф, который иначе ловит свет утром и вечером, и палитра, которую невозможно повторить дважды - даже я не смогу создать точную копию.</p>
+        <h1 data-i18n="bio.title">Об авторе</h1>
+        <p data-i18n="bio.p1">Я работаю с цветом, рельефом и тишиной. В моих картинах нет сюжета в привычном смысле - только фактура, которая рождается слой за слоем. Я создаю объёмные абстракции из текстурной пасты, добавляю золото и серебро потали, а основу пишу в мягкой палитре белого, бежевого и глубокого изумрудного. Каждая работа - это ручной, медленный процесс: несколько слоёв, несколько дней, и ни одной одинаковой текстуры дважды.</p>
+        <p data-i18n="bio.p2"><strong>Моя история: искусство как опора</strong></p>
+        <p data-i18n="bio.p3">Абстракция пришла в мою жизнь не как карьерный выбор, а как способ пережить по-настоящему сложный период. В тот момент творчество стало моей главной точкой опоры. С тех пор я пишу картины иначе, чем художник, для которого это просто ремесло - каждая работа несёт в себе что-то настоящее, прожитое, а не придуманное для интерьерного каталога.</p>
+        <p data-i18n="bio.p4"><strong>Почему выбирают мои работы</strong></p>
+        <p data-i18n="bio.p5">Я не работаю сериями на поток - каждая картина создаётся в одном экземпляре, без повторений и тиражей. Вы покупаете не декор, а объект, у которого есть автор, история и характер: рельеф, который иначе ловит свет утром и вечером, и палитра, которую невозможно повторить дважды - даже я не смогу создать точную копию.</p>
     </div>
 
     <!-- Контакты -->
     <div id="contact-page" class="contact-page">
-        <h1>Свяжитесь со мной</h1>
+        <h1 data-i18n="contact.title">Свяжитесь со мной</h1>
         <form class="contact-form">
             <div class="form-group">
-                <label for="name">Имя</label>
+                <label for="name" data-i18n="contact.name">Имя</label>
                 <input type="text" id="name" required>
             </div>
             <div class="form-group">
@@ -3317,25 +3534,25 @@
                 <input type="email" id="email" required>
             </div>
             <div class="form-group">
-                <label for="message">Сообщение</label>
+                <label for="message" data-i18n="contact.message">Сообщение</label>
                 <textarea id="message" required></textarea>
             </div>
-            <button type="submit" class="submit-button">Отправить</button>
+            <button type="submit" class="submit-button" data-i18n="contact.send">Отправить</button>
         </form>
     </div>
 
     <!-- Футер -->
     <footer>
-        <div class="mobile-bio-link" data-page="bio">Об авторе</div>
+        <div class="mobile-bio-link" data-page="bio" data-i18n="nav.bio">Об авторе</div>
         <div class="social-links">
             <a href="javascript:void(0)" onclick="showPage('agreement')" class="social-link-agreement">
-                <span class="social-link-text">Договор</span>
+                <span class="social-link-text" data-i18n="footer.agreement">Договор</span>
             </a>
             <a href="javascript:void(0)" onclick="showPage('privacy')" class="social-link-privacy">
-                <span class="social-link-text">Политика</span>
+                <span class="social-link-text" data-i18n="footer.privacy">Политика</span>
             </a>
             <a href="javascript:void(0)" onclick="showPage('refund')" class="social-link-refund">
-                <span class="social-link-text">Возврат</span>
+                <span class="social-link-text" data-i18n="footer.refund">Возврат</span>
             </a>
         </div>
     </footer>
@@ -3344,7 +3561,7 @@
     <div class="contacts-modal" id="contacts-modal">
         <div class="contacts-content">
             <div class="close-contacts" id="close-contacts">x</div>
-            <h2>Контакты</h2>
+            <h2 data-i18n="nav.contacts">Контакты</h2>
             <div class="contact-item">
                 <span class="contact-label">Email</span>
                 <a href="mailto:tatiana.janart@gmail.com">tatiana.janart@gmail.com</a>
@@ -3406,6 +3623,412 @@
         </div>
     </div>
     <script>
+
+        // ===== I18N =====
+        const I18N = {
+            ru: {
+                'nav.cart': 'Корзина',
+                'nav.gallery': 'Галерея',
+                'nav.bio': 'Об авторе',
+                'nav.contacts': 'Контакты',
+                'nav.menu': 'Меню',
+                'nav.home': 'Главная',
+                'lang.label': 'Язык',
+                'btn.buy': 'Купить',
+                'btn.buyAccess': 'Купить доступ',
+                'btn.free': 'Бесплатно',
+                'btn.addToCart': 'Добавить в корзину',
+                'aria.backGallery': 'Назад в галерею',
+                'aria.close': 'Закрыть',
+                'aria.prevImage': 'Предыдущее изображение',
+                'aria.nextImage': 'Следующее изображение',
+                'home.heroAlt': 'Главное изображение JANART STUDIO',
+                'bio.title': 'Об авторе',
+                'bio.p1': 'Я работаю с цветом, рельефом и тишиной. В моих картинах нет сюжета в привычном смысле - только фактура, которая рождается слой за слоем. Я создаю объёмные абстракции из текстурной пасты, добавляю золото и серебро потали, а основу пишу в мягкой палитре белого, бежевого и глубокого изумрудного. Каждая работа - это ручной, медленный процесс: несколько слоёв, несколько дней, и ни одной одинаковой текстуры дважды.',
+                'bio.p2': '<strong>Моя история: искусство как опора</strong>',
+                'bio.p3': 'Абстракция пришла в мою жизнь не как карьерный выбор, а как способ пережить по-настоящему сложный период. В тот момент творчество стало моей главной точкой опоры. С тех пор я пишу картины иначе, чем художник, для которого это просто ремесло - каждая работа несёт в себе что-то настоящее, прожитое, а не придуманное для интерьерного каталога.',
+                'bio.p4': '<strong>Почему выбирают мои работы</strong>',
+                'bio.p5': 'Я не работаю сериями на поток - каждая картина создаётся в одном экземпляре, без повторений и тиражей. Вы покупаете не декор, а объект, у которого есть автор, история и характер: рельеф, который иначе ловит свет утром и вечером, и палитра, которую невозможно повторить дважды - даже я не смогу создать точную копию.',
+                'contact.title': 'Свяжитесь со мной',
+                'contact.name': 'Имя',
+                'contact.message': 'Сообщение',
+                'contact.send': 'Отправить',
+                'footer.agreement': 'Договор',
+                'footer.privacy': 'Политика',
+                'footer.refund': 'Возврат',
+                'order.title': 'Ваш заказ',
+                'order.backGallery': '← Вернуться в галерею',
+                'order.toPay': 'К оплате:',
+                'order.contactTitle': 'Контактные данные',
+                'order.contactLabel': 'Введите телефон/e-mail для связи:',
+                'order.contactPlaceholder': '+7 (999) 123-45-67 или email@example.com',
+                'order.agreementHtml': 'Я принимаю&nbsp;<a href="javascript:void(0)" onclick="showPage(\'agreement\')">договор</a>,&nbsp;<a href="javascript:void(0)" onclick="showPage(\'privacy\')">политику обработки персональных данных</a>&nbsp;и&nbsp;<a href="javascript:void(0)" onclick="showPage(\'refund\')">условия возврата и отмены платежа</a>',
+                'order.pay': 'Перейти к оплате',
+                'order.smartPay': 'Смарт оплата',
+                'order.smartPayStatus': 'После подтверждения заказа вы перейдёте на страницу оплаты Сам.Эквайринг.',
+                'order.backOrder': '← Назад к заказу',
+                'order.empty': 'Корзина пуста',
+                'order.cartEmptyAlert': 'Корзина пуста',
+                'docs.agreementTitle': 'Договор об оказании услуг (публичная оферта)',
+                'docs.pricingTitle': 'Тарифы и цены',
+                'docs.refundTitle': 'Условия возврата и отмены платежа',
+                'docs.privacyTitle': 'Политика обработки персональных данных',
+                'docs.back': '← Назад',
+                'gallery.noImage': 'Изображение недоступно',
+                'gallery.noContent': 'Нет контента',
+                'gallery.priceNA': 'Цена не указана',
+                'gallery.loading': 'Загрузка...',
+                'product.backGallery': '← Назад в галерею',
+                'product.noFrame': 'Картина поставляется без рамы.',
+                'product.added': 'Товар добавлен в корзину!',
+                'product.withoutFrame': 'Картина поставляется без рамы.'
+            },
+            en: {
+                'nav.cart': 'Cart',
+                'nav.gallery': 'Gallery',
+                'nav.bio': 'About the artist',
+                'nav.contacts': 'Contacts',
+                'nav.menu': 'Menu',
+                'nav.home': 'Home',
+                'lang.label': 'Language',
+                'btn.buy': 'Buy',
+                'btn.buyAccess': 'Buy access',
+                'btn.free': 'Free',
+                'btn.addToCart': 'Add to cart',
+                'aria.backGallery': 'Back to gallery',
+                'aria.close': 'Close',
+                'aria.prevImage': 'Previous image',
+                'aria.nextImage': 'Next image',
+                'home.heroAlt': 'JANART STUDIO hero image',
+                'bio.title': 'About the artist',
+                'bio.p1': 'I work with colour, relief, and silence. There is no conventional plot in my paintings — only texture that is born layer by layer. I create volumetric abstractions from texture paste, add gold and silver leaf, and paint the base in a soft palette of white, beige, and deep emerald. Each work is a handmade, slow process: several layers, several days, and never the same texture twice.',
+                'bio.p2': '<strong>My story: art as an anchor</strong>',
+                'bio.p3': 'Abstraction entered my life not as a career choice, but as a way to survive a truly difficult period. At that moment, creating became my main point of support. Since then I paint differently from an artist for whom this is merely a craft — each work carries something real and lived, not invented for an interior catalogue.',
+                'bio.p4': '<strong>Why people choose my work</strong>',
+                'bio.p5': 'I do not produce series for mass output — each painting is made as a unique piece, without repeats or editions. You are not buying décor, but an object with an author, a story, and character: a relief that catches morning and evening light differently, and a palette that cannot be repeated twice — even I could not create an exact copy.',
+                'contact.title': 'Get in touch',
+                'contact.name': 'Name',
+                'contact.message': 'Message',
+                'contact.send': 'Send',
+                'footer.agreement': 'Agreement',
+                'footer.privacy': 'Privacy',
+                'footer.refund': 'Refunds',
+                'order.title': 'Your order',
+                'order.backGallery': '← Back to gallery',
+                'order.toPay': 'Total due:',
+                'order.contactTitle': 'Contact details',
+                'order.contactLabel': 'Enter a phone number or email:',
+                'order.contactPlaceholder': '+1 (999) 123-45-67 or email@example.com',
+                'order.agreementHtml': 'I accept the&nbsp;<a href="javascript:void(0)" onclick="showPage(\'agreement\')">agreement</a>,&nbsp;<a href="javascript:void(0)" onclick="showPage(\'privacy\')">privacy policy</a>&nbsp;and&nbsp;<a href="javascript:void(0)" onclick="showPage(\'refund\')">refund and payment cancellation terms</a>',
+                'order.pay': 'Proceed to payment',
+                'order.smartPay': 'Smart payment',
+                'order.smartPayStatus': 'After confirming the order you will be redirected to the Selfwork payment page.',
+                'order.backOrder': '← Back to order',
+                'order.empty': 'Your cart is empty',
+                'order.cartEmptyAlert': 'Your cart is empty',
+                'docs.agreementTitle': 'Service agreement (public offer)',
+                'docs.pricingTitle': 'Prices and rates',
+                'docs.refundTitle': 'Refund and payment cancellation terms',
+                'docs.privacyTitle': 'Personal data processing policy',
+                'docs.back': '← Back',
+                'gallery.noImage': 'Image unavailable',
+                'gallery.noContent': 'No content',
+                'gallery.priceNA': 'Price not set',
+                'gallery.loading': 'Loading...',
+                'product.backGallery': '← Back to gallery',
+                'product.noFrame': 'The painting is supplied without a frame.',
+                'product.added': 'Item added to cart!',
+                'product.withoutFrame': 'The painting is supplied without a frame.'
+            }
+        };
+
+        const PAINTING_I18N = {
+            'OP_6': {
+                description: {
+                    en: 'SALE!\nThe painting suits loft, minimalist, or Scandinavian interiors, adding depth and character to the space.\nAcrylic, silver leaf, pigment, decorative stones on canvas, 2025'
+                },
+                size: { en: '30×30 cm' }
+            },
+            'OP_1': {
+                description: {
+                    en: 'NEW! Northern lights\nSize 30×40 cm, stretcher 4 cm\nSuits loft, minimalist, or Scandinavian interiors'
+                },
+                size: { en: '30×40 cm' }
+            },
+            'OP_5': {
+                description: {
+                    en: 'Acrylic, oil, metal leaf, decorative stones.\nCotton canvas, 2025'
+                },
+                size: { en: '40×40 cm' }
+            },
+            'OP_4': {
+                description: {
+                    en: 'Acrylic, silver leaf, decorative stones\nDiptych'
+                },
+                size: { en: '30×30 cm' }
+            },
+            'OP_3': {
+                title: { en: 'Dimma (Fog)' },
+                description: {
+                    en: 'Acrylic, silver leaf, decorative stones'
+                },
+                size: { en: '50×60 cm' }
+            },
+            'OP_7': {
+                title: { en: 'Isvidd (Ice plain)' },
+                description: {
+                    en: 'Acrylic, texture paste, silver leaf, decorative stones\nCotton/linen canvas, 2025'
+                },
+                size: { en: '40×50 cm' }
+            },
+            'PAINTING_10': {
+                title: { en: null },
+                description: {
+                    en: null
+                }
+            },
+            'PAINTING_8': {
+                title: { en: 'Winter dawn' },
+                description: {
+                    en: 'Textured painting\nAcrylic, gold leaf, texture paste, 2025'
+                },
+                size: { en: '30×40 cm' }
+            },
+            'PAINTING_9': {
+                title: { en: 'Untitled, No. 9' },
+                description: {
+                    en: 'Acrylic, texture paste, gold leaf, decorative stones'
+                },
+                size: { en: '30×35 cm' }
+            },
+            'PAINTING_11': {
+                description: {
+                    en: 'Painting on wooden panel, minimalism\nTexture paste, acrylic'
+                },
+                size: { en: '40×50 cm' }
+            },
+            'PAINTING_12': {
+                title: { en: 'Untitled, No. 12' },
+                description: {
+                    en: 'Acrylic, marble dust and pigment on canvas, 2024'
+                }
+            }
+        };
+
+        // Special handling for duplicate PAINTING_10 ids (Mont / Zlatibor) by title
+        const PAINTING_I18N_BY_TITLE = {
+            'Mont (Диптих) ': {
+                title: { en: 'Mont (Diptych)' },
+                description: {
+                    en: 'Minimalism\nAcrylic, gold leaf.\nOn canvas with 3 cm stretcher, 2024'
+                },
+                size: { en: '30×30 cm' }
+            },
+            'Mont (Диптих)': {
+                title: { en: 'Mont (Diptych)' },
+                description: {
+                    en: 'Minimalism\nAcrylic, gold leaf.\nOn canvas with 3 cm stretcher, 2024'
+                },
+                size: { en: '30×30 cm' }
+            },
+            'Zlatibor': {
+                description: { en: '' },
+                size: { en: '30×30 cm' }
+            }
+        };
+
+        let currentLang = localStorage.getItem('janart_lang') || 'ru';
+
+        function t(key) {
+            const pack = I18N[currentLang] || I18N.ru;
+            return (pack && pack[key]) || (I18N.ru[key]) || key;
+        }
+
+        function localizeSize(size) {
+            if (!size || currentLang === 'ru') return size || '';
+            return String(size)
+                .replace(/х/gi, '×')
+                .replace(/x/gi, '×')
+                .replace(/\s*см\b/gi, ' cm')
+                .replace(/(\d+)\s*$/i, (m, d, offset, s) => {
+                    // if ends with bare numbers without unit, leave as is
+                    return m;
+                });
+        }
+
+        function localizePainting(painting) {
+            if (!painting) return painting;
+            const titleKey = (painting.title || '').trim();
+            const byTitle = PAINTING_I18N_BY_TITLE[painting.title] || PAINTING_I18N_BY_TITLE[titleKey] || PAINTING_I18N_BY_TITLE[titleKey + ' '] || {};
+            const byId = PAINTING_I18N[painting.id] || {};
+            const meta = { ...byId, ...byTitle };
+            const localized = { ...painting };
+            if (currentLang === 'en') {
+                if (meta.title && meta.title.en) localized.title = meta.title.en;
+                if (meta.description && meta.description.en != null) localized.description = meta.description.en;
+                else if (painting.description) localized.description = translatePaintingDescription(painting.description);
+                if (meta.size && meta.size.en) localized.size = meta.size.en;
+                else localized.size = localizeSize(painting.size);
+            }
+            return localized;
+        }
+
+        function translatePaintingDescription(text) {
+            if (!text || currentLang === 'ru') return text;
+            let out = String(text);
+            const pairs = [
+                ['Картина подойдёт для интерьеров в стиле лофт, минимализм или скандинавский, добавляя глубину и характер пространству.', 'The painting suits loft, minimalist, or Scandinavian interiors, adding depth and character to the space.'],
+                ['Подойдёт для интерьеров в стиле лофт, минимализм или скандинавский', 'Suits loft, minimalist, or Scandinavian interiors'],
+                ['Северное сияние', 'Northern lights'],
+                ['Акрил, серебряная поталь, пигмент, декоративные камни', 'Acrylic, silver leaf, pigment, decorative stones'],
+                ['Акрил, серебряная поталь, декоративные камни', 'Acrylic, silver leaf, decorative stones'],
+                ['Акрил, масло, поталь, декоративные камни.', 'Acrylic, oil, metal leaf, decorative stones.'],
+                ['Акрил, текстурная паста, серебряная поталь, декоративные камни', 'Acrylic, texture paste, silver leaf, decorative stones'],
+                ['Акрил, текстурная паста, золотая поталь, декоративные камни', 'Acrylic, texture paste, gold leaf, decorative stones'],
+                ['Акрил, золотая поталь.', 'Acrylic, gold leaf.'],
+                ['Акрил, золотая поталь, текстурная паста, 2025', 'Acrylic, gold leaf, texture paste, 2025'],
+                ['Акрил, мраморная пыль и пигмент на холсте, 2024', 'Acrylic, marble dust and pigment on canvas, 2024'],
+                ['Картина на деревянном холсте, минимализм', 'Painting on wooden panel, minimalism'],
+                ['Текстурная паста, акрил', 'Texture paste, acrylic'],
+                ['Текстурная картина', 'Textured painting'],
+                ['на холсте', 'on canvas'],
+                ['На холсте с подрамником 3 см, 2024', 'On canvas with 3 cm stretcher, 2024'],
+                ['Холст хлопок/лён, 2025', 'Cotton/linen canvas, 2025'],
+                ['Холст хлопок, 2025', 'Cotton canvas, 2025'],
+                ['Минимализм', 'Minimalism'],
+                ['Диптих', 'Diptych'],
+                ['Размер', 'Size'],
+                ['подрамник', 'stretcher'],
+                [' см', ' cm'],
+            ];
+            pairs.forEach(([ru, en]) => {
+                out = out.split(ru).join(en);
+            });
+            return out;
+        }
+
+        function applyLanguage(lang, { refreshGallery = true } = {}) {
+            if (!I18N[lang]) lang = 'ru';
+            currentLang = lang;
+            localStorage.setItem('janart_lang', lang);
+            document.documentElement.lang = lang === 'en' ? 'en' : 'ru';
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                const val = t(key);
+                if (val && (key === 'bio.p2' || key === 'bio.p4' || val.includes('<'))) {
+                    el.innerHTML = val;
+                } else {
+                    el.textContent = val;
+                }
+            });
+
+            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                el.innerHTML = t(el.getAttribute('data-i18n-html'));
+            });
+
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                el.setAttribute('placeholder', t(el.getAttribute('data-i18n-placeholder')));
+            });
+
+            document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+                el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria')));
+            });
+
+            document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+                el.setAttribute('alt', t(el.getAttribute('data-i18n-alt')));
+            });
+
+            // Toggle document language blocks if present
+            document.querySelectorAll('[data-lang-content]').forEach(el => {
+                const blockLang = el.getAttribute('data-lang-content');
+                el.hidden = blockLang !== lang;
+            });
+
+            const flag = lang === 'en' ? '🇬🇧' : '🇷🇺';
+            const code = lang === 'en' ? 'EN' : 'RU';
+            const flagEl = document.getElementById('lang-current-flag');
+            const codeEl = document.getElementById('lang-current-code');
+            const flagElM = document.getElementById('lang-current-flag-mobile');
+            const codeElM = document.getElementById('lang-current-code-mobile');
+            if (flagEl) flagEl.textContent = flag;
+            if (codeEl) codeEl.textContent = code;
+            if (flagElM) flagElM.textContent = flag;
+            if (codeElM) codeElM.textContent = code;
+
+            document.querySelectorAll('.lang-switcher__option').forEach(btn => {
+                btn.classList.toggle('is-active', btn.getAttribute('data-lang') === lang);
+            });
+
+            // Close menus
+            document.querySelectorAll('.lang-switcher__menu').forEach(m => { m.hidden = true; });
+            document.querySelectorAll('.lang-switcher__btn').forEach(b => b.setAttribute('aria-expanded', 'false'));
+
+            if (typeof updateCartDisplay === 'function') {
+                try { updateCartDisplay(); } catch (e) {}
+            }
+
+            if (refreshGallery && typeof initGallery === 'function' && typeof getCurrentGalleryData === 'function') {
+                try {
+                    const data = getCurrentGalleryData();
+                    if (data) initGallery(data, currentGalleryType === 'gallery2' ? 'gallery2-grid' : 'gallery-grid');
+                } catch (e) {
+                    console.warn('Gallery refresh after language change failed', e);
+                }
+            }
+
+            // Refresh open painting modal if any
+            if (typeof currentModalPainting !== 'undefined' && currentModalPainting) {
+                const modal = document.getElementById('painting-modal');
+                if (modal && modal.style.display !== 'none') {
+                    const loc = localizePainting(currentModalPainting);
+                    const setText = (sel, val) => {
+                        const el = modal.querySelector(sel);
+                        if (el) el.textContent = val || '';
+                    };
+                    setText('.painting-modal__title', loc.title);
+                    setText('.painting-modal__price', loc.price);
+                    setText('.painting-modal__size', loc.size);
+                    setText('.painting-modal__description', loc.description);
+                    setText('.painting-modal__mobile-title', loc.title);
+                    setText('.painting-modal__mobile-price', loc.price);
+                    setText('.painting-modal__mobile-size', loc.size);
+                    setText('.painting-modal__mobile-description', loc.description);
+                }
+            }
+        }
+
+        function initLanguageSwitcher() {
+            function bind(btnId, menuId) {
+                const btn = document.getElementById(btnId);
+                const menu = document.getElementById(menuId);
+                if (!btn || !menu) return;
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const open = menu.hidden;
+                    document.querySelectorAll('.lang-switcher__menu').forEach(m => { m.hidden = true; });
+                    document.querySelectorAll('.lang-switcher__btn').forEach(b => b.setAttribute('aria-expanded', 'false'));
+                    menu.hidden = !open;
+                    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+                });
+                menu.querySelectorAll('[data-lang]').forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        applyLanguage(option.getAttribute('data-lang'));
+                    });
+                });
+            }
+            bind('lang-switcher-btn', 'lang-switcher-menu');
+            bind('lang-switcher-btn-mobile', 'lang-switcher-menu-mobile');
+            document.addEventListener('click', () => {
+                document.querySelectorAll('.lang-switcher__menu').forEach(m => { m.hidden = true; });
+                document.querySelectorAll('.lang-switcher__btn').forEach(b => b.setAttribute('aria-expanded', 'false'));
+            });
+            applyLanguage(currentLang, { refreshGallery: false });
+        }
+
         // ===== ГЛОБАЛЬНЫЕ ФУНКЦИИ ДЛЯ НАВИГАЦИИ МОДАЛЬНОГО ОКНА =====
         let currentModalPainting = null;
         let currentModalImageIndex = 0;
@@ -3576,7 +4199,7 @@ let currentGalleryType = 'gallery'; // 'gallery' или 'gallery2'
             updateCartVisibility();
             
             if (cart.items.length === 0) {
-                cartItemsContainer.innerHTML = '<p class="empty-cart">Корзина пуста</p>';
+                cartItemsContainer.innerHTML = '<p class="empty-cart">' + t('order.empty') + '</p>';
                 totalAmountElement.textContent = '0';
                 if (proceedBtn) proceedBtn.disabled = true;
                 return;
@@ -3591,9 +4214,9 @@ let currentGalleryType = 'gallery'; // 'gallery' или 'gallery2'
                         <img src="${item.mainImage}" alt="${item.title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjZjBmMGYwIi8+Cjx0ZXh0IHg9IjUwIiB5PSI1NSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjOTk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7Qn9C+0LrQsNC30LDRgtC10LvRjzwvdGV4dD4KPC9zdmc+'">
                     </div>
                     <div class="cart-item-info">
-                        <h3>${item.title}</h3>
-                        <p class="cart-item-size">${item.size}</p>
-                        <p class="cart-item-price">${item.price}</p>
+                        <h3>${localizePainting(item).title}</h3>
+                        <p class="cart-item-size">${localizePainting(item).size || ''}</p>
+                        <p class="cart-item-price">${localizePainting(item).price}</p>
                     </div>
                     <div class="cart-item-actions">
                         <button class="remove-item-btn" onclick="removeFromCart('${item.id}')">Г—</button>
@@ -3869,7 +4492,7 @@ function logGalleryState() {
                 const agreementCheckbox = document.getElementById('accept-agreement');
 
                 if (cart.items.length === 0) {
-                    alert('Корзина пуста');
+                    alert(t('order.cartEmptyAlert'));
                     return;
                 }
 
@@ -6391,7 +7014,7 @@ function initAdminPanel() {
             // Показываем индикатор загрузки
             const loadingIndicator = document.createElement('div');
             loadingIndicator.id = 'loading-indicator';
-            loadingIndicator.innerHTML = 'Загрузка...';
+            loadingIndicator.innerHTML = t('gallery.loading');
             loadingIndicator.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.8); color: white; padding: 20px; border-radius: 8px; z-index: 10000;';
             document.body.appendChild(loadingIndicator);
             
@@ -6401,6 +7024,7 @@ function initAdminPanel() {
                 
                 // Загружаем корзину из localStorage
                 loadCartFromStorage();
+                initLanguageSwitcher();
                 console.log('localStorage очищен, загружаем данные из файла...');
                 
                 // Принудительно загружаем данные из файла
@@ -6414,6 +7038,7 @@ function initAdminPanel() {
                     initURLRouting();
                     initAdminPanel();
                     initDescriptionModal();
+                    applyLanguage(currentLang, { refreshGallery: true });
                     
                     // Убираем индикатор загрузки
                     const loadingIndicator = document.getElementById('loading-indicator');
@@ -6823,7 +7448,7 @@ function renderGalleryItems(items, galleryContainer, accessibleLots = new Set())
                 this.style.display = 'none';
                 const placeholder = document.createElement('div');
                 placeholder.className = 'image-placeholder';
-                placeholder.textContent = 'Изображение недоступно';
+                placeholder.textContent = t('gallery.noImage');
                 placeholder.style.cssText = 'display: flex; align-items: center; justify-content: center; height: 100%; background: #f0f0f0; color: #666; font-size: 14px;';
                 imageContainer.appendChild(placeholder);
             };
@@ -6849,7 +7474,7 @@ function renderGalleryItems(items, galleryContainer, accessibleLots = new Set())
             // Нет ни изображений, ни видео - показываем placeholder
             const placeholder = document.createElement('div');
             placeholder.className = 'image-placeholder';
-            placeholder.textContent = 'Нет контента';
+            placeholder.textContent = t('gallery.noContent');
             placeholder.style.cssText = 'display: flex; align-items: center; justify-content: center; height: 100%; background: #f0f0f0; color: #666; font-size: 14px;';
             imageContainer.appendChild(placeholder);
         }
@@ -6857,16 +7482,17 @@ function renderGalleryItems(items, galleryContainer, accessibleLots = new Set())
         // Информация о картине
         const infoDiv = document.createElement('div');
         infoDiv.className = 'gallery-item-info';
-        const priceText = item.price || 'Цена не указана';
+        const localizedItem = localizePainting(item);
+        const priceText = localizedItem.price || t('gallery.priceNA');
         
         // Если лот платный и нет доступа - показываем кнопку покупки вместо клика
         if (isMasterclassGallery && !hasAccess && !isFree) {
             infoDiv.innerHTML = `
-                <div class="gallery-item-title">${item.title}</div>
+                <div class="gallery-item-title">${localizedItem.title}</div>
                 <div class="gallery-item-price">${priceText}</div>
-                <div class="gallery-item-size">${item.size}</div>
-                <button class="purchase-lot-btn" data-lot-id="${lotId}" data-lot-title="${item.title}" data-lot-price="${priceText}" style="margin-top: 10px; padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; width: 100%;">
-                    Купить доступ
+                <div class="gallery-item-size">${localizedItem.size || ''}</div>
+                <button class="purchase-lot-btn" data-lot-id="${lotId}" data-lot-title="${localizedItem.title}" data-lot-price="${priceText}" style="margin-top: 10px; padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; width: 100%;">
+                    ${t('btn.buyAccess')}
                 </button>
             `;
             
@@ -6876,16 +7502,16 @@ function renderGalleryItems(items, galleryContainer, accessibleLots = new Set())
             imageContainer.style.pointerEvents = 'none';
         } else {
             const priceHtml = isMasterclassGallery && isFree
-                ? '<span style="color: #28a745;">Бесплатно</span>'
+                ? '<span style="color: #28a745;">' + t('btn.free') + '</span>'
                 : priceText;
             const buyButtonHtml = isMasterclassGallery
                 ? ''
-                : `<button class="buy-painting-list-btn gallery-buy-btn">Купить</button>`;
+                : `<button class="buy-painting-list-btn gallery-buy-btn">${t('btn.buy')}</button>`;
 
             infoDiv.innerHTML = `
-                <div class="gallery-item-title">${item.title}</div>
+                <div class="gallery-item-title">${localizedItem.title}</div>
                 <div class="gallery-item-price">${priceHtml}</div>
-                <div class="gallery-item-size">${item.size}</div>
+                <div class="gallery-item-size">${localizedItem.size || ''}</div>
                 ${buyButtonHtml}
             `;
 
@@ -7520,10 +8146,11 @@ function renderGalleryItems(items, galleryContainer, accessibleLots = new Set())
             console.log('HTML модального окна:', modal.innerHTML);
 
             // Заполняем информацию о картине
-            modal.querySelector('.painting-modal__title').textContent = painting.title;
-            modal.querySelector('.painting-modal__price').textContent = painting.price;
-            modal.querySelector('.painting-modal__size').textContent = painting.size;
-            modal.querySelector('.painting-modal__description').textContent = painting.description || '';
+            const locPainting = localizePainting(painting);
+            modal.querySelector('.painting-modal__title').textContent = locPainting.title;
+            modal.querySelector('.painting-modal__price').textContent = locPainting.price;
+            modal.querySelector('.painting-modal__size').textContent = locPainting.size;
+            modal.querySelector('.painting-modal__description').textContent = locPainting.description || '';
             
             // Заполняем мобильную информацию о картине
             const mobileTitle = modal.querySelector('.painting-modal__mobile-title');
@@ -7538,16 +8165,16 @@ function renderGalleryItems(items, galleryContainer, accessibleLots = new Set())
                 mobileDescription: !!mobileDescription
             });
             
-            if (mobileTitle) mobileTitle.textContent = painting.title;
-            if (mobilePrice) mobilePrice.textContent = painting.price;
-            if (mobileSize) mobileSize.textContent = painting.size;
-            if (mobileDescription) mobileDescription.textContent = painting.description || '';
+            if (mobileTitle) mobileTitle.textContent = locPainting.title;
+            if (mobilePrice) mobilePrice.textContent = locPainting.price;
+            if (mobileSize) mobileSize.textContent = locPainting.size;
+            if (mobileDescription) mobileDescription.textContent = locPainting.description || '';
             
             console.log('📱 Мобильная информация заполнена:', {
-                title: painting.title,
-                price: painting.price,
-                size: painting.size,
-                description: painting.description
+                title: locPainting.title,
+                price: locPainting.price,
+                size: locPainting.size,
+                description: locPainting.description
             });
 
             // Показываем модальное окно сначала
@@ -8900,7 +9527,7 @@ function showGallery() {
             const productPage = document.getElementById('product-page');
             
             productPage.innerHTML = `
-                <div class="back-button" id="back-to-gallery">← Назад в галерею</div>
+                <div class="back-button" id="back-to-gallery">${t('product.backGallery')}</div>
                 <div class="product-container">
                     <div class="product-gallery">
                         <div class="product-thumbnails" id="thumbnailsContainer">
@@ -8919,14 +9546,14 @@ function showGallery() {
                         </div>
                     </div>
                     <div class="product-details">
-                        <h1 class="product-title">${product.title}</h1>
-                        <div class="product-price">${product.price}</div>
-                        <div class="product-size">${product.size}</div>
+                        <h1 class="product-title">${localizePainting(product).title}</h1>
+                        <div class="product-price">${localizePainting(product).price}</div>
+                        <div class="product-size">${localizePainting(product).size || ''}</div>
                         <div class="product-description">
-                            <p>${product.description}</p>
-                            <p>Картина поставляется без рамы.</p>
+                            <p>${localizePainting(product).description || ''}</p>
+                            <p>${t('product.withoutFrame')}</p>
                         </div>
-                        <button class="add-to-cart">Добавить в корзину</button>
+                        <button class="add-to-cart">${t('btn.addToCart')}</button>
                     </div>
                 </div>
             `;
@@ -8942,7 +9569,7 @@ function showGallery() {
             const addToCartBtn = document.querySelector('.add-to-cart');
             if (addToCartBtn) {
                 addToCartBtn.addEventListener('click', function() {
-                    alert('Товар добавлен в корзину!');
+                    alert(t('product.added'));
                 });
             }
             
