@@ -1831,6 +1831,10 @@
         .contacts-info-link:hover {
             opacity: 0.7;
         }
+
+        .contacts-social-row {
+            display: none;
+        }
         
         @media (max-width: 768px) {
             .contacts-info-page {
@@ -1844,6 +1848,32 @@
 
             .contacts-info-link {
                 font-size: 18px;
+            }
+
+            .contacts-social-row {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 22px;
+                margin-top: 36px;
+                flex-wrap: nowrap;
+            }
+
+            .contacts-social-icon {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 48px;
+                height: 48px;
+                font-size: 34px;
+                line-height: 1;
+                text-decoration: none;
+                transition: opacity 0.3s ease, transform 0.2s ease;
+            }
+
+            .contacts-social-icon:hover {
+                opacity: 0.75;
+                transform: scale(1.06);
             }
         }
 
@@ -3815,6 +3845,13 @@
         <div class="contacts-info-list">
             <a class="contacts-info-link" href="mailto:tatiana.janart@gmail.com">tatiana.janart@gmail.com</a>
             <a class="contacts-info-link" href="tel:+381621856333">+381621856333</a>
+            <a class="contacts-info-link" href="https://instagram.com/tanyajanart" target="_blank" rel="noopener noreferrer">@tanyajanart</a>
+        </div>
+        <div class="contacts-social-row">
+            <a class="contacts-social-icon" href="https://wa.me/381621856333" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">💬</a>
+            <a class="contacts-social-icon" href="https://instagram.com/tanyajanart" target="_blank" rel="noopener noreferrer" aria-label="Instagram">📸</a>
+            <a class="contacts-social-icon" href="https://t.me/tanya_janart" target="_blank" rel="noopener noreferrer" aria-label="Telegram">✈️</a>
+            <a class="contacts-social-icon" href="viber://chat?number=%2B381621856333" aria-label="Viber">💜</a>
         </div>
     </div>
 
@@ -3859,6 +3896,9 @@
             </div>
             <div class="contact-item">
                 <a href="tel:+381621856333">+381621856333</a>
+            </div>
+            <div class="contact-item">
+                <a href="https://instagram.com/tanyajanart" target="_blank" rel="noopener noreferrer">@tanyajanart</a>
             </div>
         </div>
     </div>
