@@ -1,0 +1,63 @@
+2025-10-25 15:40:56 - Error: Invalid contact format - сцсцсцйс
+2025-10-25 15:40:57 - Error: Invalid contact format - сцсцсцйс
+2025-10-25 15:41:20 - Success: Order JS20251025154120 saved. Contact: ma89spb@gmail.com, Total: 44350 ₽, Items: 3
+2025-10-25 15:41:21 - Success: Order JS20251025154121 saved. Contact: ma89spb@gmail.com, Total: 44350 ₽, Items: 3
+2025-10-25 16:02:39 - Success: Order JS20251025160239 saved. Contact: 2ma89spb@gmail.com, Total: 17450 ₽, Items: 1
+2025-10-25 16:02:39 - Success: Order JS20251025160239 saved. Contact: 2ma89spb@gmail.com, Total: 17450 ₽, Items: 1
+2025-10-25 16:02:39 - Success: Order JS20251025160239 saved. Contact: 2ma89spb@gmail.com, Total: 17450 ₽, Items: 1
+2025-10-25 16:02:40 - Success: Order JS20251025160240 saved. Contact: 2ma89spb@gmail.com, Total: 17450 ₽, Items: 1
+2025-10-26 11:17:53 - Success: Order JS20251026111753 saved. Contact: 3ma89spb@gmail.com, Total: 17450 ₽, Items: 1
+2025-10-26 11:17:53 - Success: Order JS20251026111753 saved. Contact: 3ma89spb@gmail.com, Total: 17450 ₽, Items: 1
+2025-10-26 11:32:42 - Error: Invalid contact format - +7888181818181
+2025-10-26 11:32:54 - Success: Order JS20251026113254 saved. Contact: +78881234567, Total: 22160 ₽, Items: 1
+2025-10-26 11:34:48 - Success: Order JS20251026113448 saved. Contact: Ma89spb@gmail.com, Total: 13450 ₽, Items: 1
+2025-10-26 11:41:04 - Email notification sent for order JS20251026114104
+2025-10-26 11:41:04 - Success: Order JS20251026114104 saved. Contact: 3ma89spb@gmail.com (email), Total: 17450 ₽, Items: 1
+2025-10-26 11:41:05 - Warning: Duplicate order prevented - key: 199c37d551f552cefd66b449172c30d1
+2025-11-23 19:49:17 - Error: Invalid contact format - Hfff
+2025-11-23 19:49:18 - Error: Invalid contact format - Hfff
+2025-11-23 19:49:18 - Error: Invalid contact format - Hfff
+2026-05-11 15:17:36 - Email notification sent for order JS20260511151736
+2026-05-11 15:17:36 - Success: Order JS20260511151736 saved. Contact: ma89spb@gmail.com (email), Total: 19610 ₽, Items: 2
+2026-05-11 16:36:59 - Email notification sent for order JS20260511163659
+2026-05-11 16:36:59 - Success: Order JS20260511163659 saved. Contact: ma89spb@gmail.com (email), Total: 17450 ₽, Items: 1
+2026-05-11 16:37:00 - Warning: Duplicate order prevented - key: f1fb38cab4962645021475ffe1757b90
+2026-05-11 16:37:00 - Warning: Duplicate order prevented - key: f1fb38cab4962645021475ffe1757b90
+2026-05-11 16:37:00 - Warning: Duplicate order prevented - key: f1fb38cab4962645021475ffe1757b90
+2026-05-11 16:41:56 - Warning: Duplicate order prevented - key: f1fb38cab4962645021475ffe1757b90
+2026-05-11 16:41:56 - Warning: Duplicate order prevented - key: f1fb38cab4962645021475ffe1757b90
+2026-05-11 16:41:56 - Warning: Duplicate order prevented - key: f1fb38cab4962645021475ffe1757b90
+2026-05-11 16:41:56 - Warning: Duplicate order prevented - key: f1fb38cab4962645021475ffe1757b90
+2026-05-11 16:41:56 - Warning: Duplicate order prevented - key: f1fb38cab4962645021475ffe1757b90
+2026-05-15 16:26:30 - Error: Invalid contact format - 1
+2026-05-15 16:26:30 - Error: Invalid contact format - 1
+2026-05-15 16:26:30 - Error: Invalid contact format - 1
+2026-05-15 16:26:30 - Error: Invalid contact format - 1
+2026-05-15 16:26:31 - Error: Invalid contact format - 1
+2026-05-15 16:26:32 - Error: Invalid contact format - 1
+2026-05-18 13:18:38 - Email notification sent for order JS20260518131838
+2026-05-18 13:18:38 - Success: Order JS20260518131838 saved. Contact: +79533736073 (phone), Total: 9450 ₽, Items: 1
+2026-05-18 14:02:52 - Email notification sent for order JS20260518140252
+2026-05-18 14:02:52 - Success: Order JS20260518140252 saved. Contact: ma89spb@gmail.com (email), Total: 9450 ₽, Items: 1
+2026-05-18 14:10:14 - Warning: Duplicate order prevented - key: 87c71d58dbabc63bbdacfa0322985cc6
+2026-05-18 14:11:22 - Warning: Duplicate order prevented - key: 87c71d58dbabc63bbdacfa0322985cc6
+2026-05-18 14:15:11 - Email notification sent for order JS20260518141511
+2026-05-18 14:15:11 - Success: Order JS20260518141511 saved. Contact: ma89spb@gmail.com (email), Total: 10 ₽, Items: 1
+2026-05-18 14:23:55 - Email notification sent for order JS20260518142355
+2026-05-18 14:23:55 - Success: Order JS20260518142355 saved. Contact: ma89spb@gmail.com (email), Total: 17450 ₽, Items: 1
+2026-05-18 14:23:56 - Warning: Duplicate order prevented - key: e1848cf9d4a9d00918a44aed999fd48c
+2026-05-18 14:26:07 - Email notification sent for order JS20260518142607
+2026-05-18 14:26:07 - Success: Order JS20260518142607 saved. Contact: ma89spb@gmail.com (email), Total: 13450 ₽, Items: 1
+2026-05-18 15:00:35 - Email notification sent for order JS20260518150035
+2026-05-18 15:00:35 - Success: Order JS20260518150035 saved. Contact: ma89spb@gmail.com (email), Total: 9450 ₽, Items: 1
+2026-05-18 17:04:01 - Warning: Duplicate order prevented - key: bc63e510b95e7dd66d72148c6f5be7e8
+2026-05-18 17:04:02 - Warning: Duplicate order prevented - key: bc63e510b95e7dd66d72148c6f5be7e8
+2026-05-18 17:04:02 - Warning: Duplicate order prevented - key: bc63e510b95e7dd66d72148c6f5be7e8
+2026-05-18 17:05:19 - Warning: Duplicate order prevented - key: bc63e510b95e7dd66d72148c6f5be7e8
+2026-05-18 17:05:20 - Warning: Duplicate order prevented - key: bc63e510b95e7dd66d72148c6f5be7e8
+2026-05-18 17:06:15 - Email notification sent for order JS20260518170615
+2026-05-18 17:06:15 - Success: Order JS20260518170615 saved. Contact: ma89spb@gmail.com (email), Total: 10 ₽, Items: 1
+2026-05-18 17:10:38 - Warning: Duplicate order prevented - key: bc63e510b95e7dd66d72148c6f5be7e8
+2026-05-18 17:16:32 - Warning: Duplicate order prevented - key: bc63e510b95e7dd66d72148c6f5be7e8
+2026-06-03 08:10:07 - Email notification sent for order JS20260603081006
+2026-06-03 08:10:07 - Success: Order JS20260603081006 saved. Contact: ma89spb@gmail.com (email), Total: 17450 ₽, Items: 1
